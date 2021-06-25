@@ -1,3 +1,1 @@
-# Cangjie-deveco-plugins
-
-null
+#Intellij_cangjie_plugin
