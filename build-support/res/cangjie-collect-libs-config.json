@@ -1,0 +1,157 @@
+{
+  "defaultCopyRuntimeLibs50": [
+    "libcangjie-runtime.so",
+    "libboundscheck.so"
+  ],
+  "asanRuntimeDependLibs": [
+    "libboundscheck.so"
+  ],
+  "compatibilityRuntimeLibs50": [
+    "libcangjie-runtime.so"
+  ],
+  "stdPkgDependLibsMapper50": {
+    "libboundscheck.so": [],
+    "libcangjie-demangle.so": [],
+    "libcangjie-runtime.so": [
+      "libboundscheck.so",
+      "libhilog_ndk.z.so",
+      "libhitrace_ndk.z.so"
+    ],
+    "libcangjie-std-argopt.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-ast.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-binary.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-collection.concurrent.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-collection.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-console.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-convert.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-core.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-crypto.cipher.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-crypto.digest.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-crypto.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-database.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-database.sql.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-deriving.api.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-deriving.builtins.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-deriving.impl.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-deriving.resolve.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-env.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-fs.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-interop.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-io.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-math.numeric.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-math.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-net.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-objectpool.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-overflow.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-posix.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-process.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-random.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-ref.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-reflect.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-regex.so": [
+      "libboundscheck.so",
+      "libpcre2-8.so.0"
+    ],
+    "libcangjie-std-runtime.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-sort.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-sync.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-time.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-unicode.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-unittest.common.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-unittest.diff.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-unittest.mock.internal.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-unittest.mock.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-unittest.prop_test.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std-unittest.so": [
+      "libboundscheck.so"
+    ],
+    "libcangjie-std.so": [
+      "libboundscheck.so"
+    ],
+    "libpcre2-8.so": [],
+    "libpcre2-8.so.0": [],
+    "libpcre2-8.so.0.14.0": []
+  }
+}

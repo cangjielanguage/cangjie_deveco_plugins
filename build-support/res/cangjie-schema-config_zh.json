@@ -1,0 +1,60 @@
+{
+  "cangjieOptionsConfig": {
+    "cangjieOptions": {
+      "description": "仓颉编译相关配置。",
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "path",
+          "abiFilters",
+          "strictCheckDependencies",
+          "arguments",
+          "collectSDKLibs",
+          "checkDeviceTypes"
+        ]
+      },
+      "properties": {
+        "path": {
+          "description": "cjpm.toml文件的路径，例如：./cjpm.toml。",
+          "type": "string"
+        },
+        "abiFilters": {
+          "description": "定义仓颉应用运行所支持的系统CPU架构类型，可包含多个，例如：Arm64-v8a。",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "arm64-v8a",
+              "x86_64"
+            ]
+          },
+          "minItems": 1
+        },
+        "strictCheckDependencies": {
+          "description": "有依赖项未安装时，会构建报错。",
+          "type": "boolean",
+          "default": true
+        },
+        "arguments": {
+          "description": "指定cjpm build编译参数，例如：--cfg。",
+          "type": [
+            "string",
+            "array"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "collectSDKLibs": {
+          "description": "将应用程序所依赖的运行库、系统库、标准库打包。",
+          "type": "boolean"
+        },
+        "checkDeviceTypes": {
+          "description": "是否校验配置的设备类型。",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  }
+}

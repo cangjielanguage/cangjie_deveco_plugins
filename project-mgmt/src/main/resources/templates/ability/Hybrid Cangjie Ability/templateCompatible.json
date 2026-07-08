@@ -1,0 +1,52 @@
+{
+  "id": "[Cangjie] Hybrid Ability",
+  "displayName": "[Cangjie] Hybrid Ability",
+  "description": "This template implements a hybrid ability that ArkTs calls Cangjie code.",
+  "category": "ability",
+  "baseProvider": "ohos",
+  "functionType": "basic",
+  "globalsFile": "parameter.json.ftl",
+  "recipeFile": "command.xml.ftl",
+  "templateIcon": "Hybrid Cangjie Ability Icon.svg",
+  "addOnTemplateIcon": "Hybrid Cangjie Ability Icon.svg",
+  "templatePreviewImage": "Hybrid Cangjie Ability Preview.svg",
+  "minCompileSdk": 12,
+  "addOnMinCompatibleSdk": "6.0.0(20)",
+  "projectType": "Application",
+  "customizeModule": {
+    "forbidNative": true,
+    "supportCrossProject": false
+  },
+  "apiType": {
+    "Application": {
+      "stageMode" : {
+        "minCompileSdk" : 12,
+        "developmentMode": {
+          "traditionalCode": [
+            {
+              "uiSyntax": "eTS",
+              "deviceType": ["default", "tablet"],
+              "minCompatibleSdk": 20
+            }
+          ]
+        }
+      }
+    }
+  },
+  "addOnApiType": {
+    "Application": {
+      "stageMode" : {
+        "minCompatibleSdk" : "6.0.0(20)",
+        "developmentMode": {
+          "traditionalCode": [
+            {
+              "uiSyntax": "eTS",
+              "deviceType": ["phone", "tablet"],
+              "minCompatibleSdk": "6.0.0(20)"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

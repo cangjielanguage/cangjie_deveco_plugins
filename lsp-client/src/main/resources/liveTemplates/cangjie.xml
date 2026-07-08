@@ -1,0 +1,332 @@
+<templateSet group="Cangjie">
+<!--
+  Copyright (c) Huawei Technologies Co., Ltd. 2026-2026. All rights reserved.
+
+  This source file is part of the Cangjie project, licensed under Apache-2.0
+  with Runtime Library Exception.
+
+  See https://cangjie-lang.cn/pages/LICENSE for license information.
+-->
+    <template name="Button" value="Button(&quot;$TEXT$&quot;).onClick {&#10;    event => $END$&#10;}" description="Create button component with 'onClick' incident response" toReformat="true" toShortenFQNames="true">
+        <variable name="TEXT" expression="" defaultValue="&quot;&quot;" alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="button" value="Button(&quot;$TEXT$&quot;).onClick {&#10;    event => $END$&#10;}" description="Create button component with 'onClick' incident response" toReformat="true" toShortenFQNames="true">
+        <variable name="TEXT" expression="" defaultValue="&quot;&quot;" alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="Checkbox" value="Checkbox().onChange {&#10;    value: Bool => $END$&#10;}" description="Create checkbox component with 'onChange' incident response" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="checkbox" value="Checkbox().onChange {&#10;    value: Bool => $END$&#10;}" description="Create checkbox component with 'onChange' incident response" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="DatePicker" value="DatePicker().onDateChange {&#10;    res => $END$&#10;}" description="Create datepicker component with 'onDateChange' incident response" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="datePicker" value="DatePicker().onDateChange {&#10;    res => $END$&#10;}" description="Create datepicker component with 'onDateChange' incident response" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="ForeachComp" value="ForEach($LIST$, itemGeneratorFunc: {item: $ITEM_TYPE$, index: Int64 =>&#10;    $END$&#10;})" description="Create statements of ForEach rendering controller" toReformat="true" toShortenFQNames="true">
+        <variable name="LIST" expression=""  alwaysStopAt="true"/>
+        <variable name="ITEM_TYPE" expression=""  alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="foreachComp" value="ForEach($LIST$, itemGeneratorFunc: {item: $ITEM_TYPE$, index: Int64 =>&#10;    $END$&#10;})" description="Create statements of ForEach rendering controller" toReformat="true" toShortenFQNames="true">
+        <variable name="LIST" expression=""  alwaysStopAt="true"/>
+        <variable name="ITEM_TYPE" expression=""  alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="ForeachLazy" value="LazyForEach($LIST$, itemGeneratorFunc: {item: $ITEM_TYPE$, index: Int64 =>&#10;    $END$&#10;})" description="Create statements of LazyForEach rendering controller" toReformat="true" toShortenFQNames="true">
+        <variable name="LIST" expression=""  alwaysStopAt="true"/>
+        <variable name="ITEM_TYPE" expression=""  alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="foreachLazy" value="LazyForEach($LIST$, itemGeneratorFunc: {item: $ITEM_TYPE$, index: Int64 =>&#10;    $END$&#10;})" description="Create statements of LazyForEach rendering controller" toReformat="true" toShortenFQNames="true">
+        <variable name="LIST" expression=""  alwaysStopAt="true"/>
+        <variable name="ITEM_TYPE" expression=""  alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="GridForEachLazy" value="Grid() {&#10;    LazyForEach($LIST$, itemGeneratorFunc: {item: $ITEM_TYPE$, index: Int64 =>&#10;        $END$&#10;    })&#10;}" description="Create high-performance grid container with LazyForEach rendering controller" toReformat="true" toShortenFQNames="true">
+        <variable name="LIST" expression=""  alwaysStopAt="true"/>
+        <variable name="ITEM_TYPE" expression=""  alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="gridForEachLazy" value="Grid() {&#10;    LazyForEach($LIST$, itemGeneratorFunc: {item: $ITEM_TYPE$, index: Int64 =>&#10;        $END$&#10;    })&#10;}" description="Create high-performance grid container with LazyForEach rendering controller" toReformat="true" toShortenFQNames="true">
+        <variable name="LIST" expression=""  alwaysStopAt="true"/>
+        <variable name="ITEM_TYPE" expression=""  alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="ListForEachLazy" value="List() {&#10;    LazyForEach($LIST$, itemGeneratorFunc: {item: $ITEM_TYPE$, index: Int64 =>&#10;        $END$&#10;    })&#10;}" description="Create high-performance list container with LazyForEach rendering controller" toReformat="true" toShortenFQNames="true">
+        <variable name="LIST" expression=""  alwaysStopAt="true"/>
+        <variable name="ITEM_TYPE" expression=""  alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="listForEachLazy" value="List() {&#10;    LazyForEach($LIST$, itemGeneratorFunc: {item: $ITEM_TYPE$, index: Int64 =>&#10;        $END$&#10;    })&#10;}" description="Create high-performance list container with LazyForEach rendering controller" toReformat="true" toShortenFQNames="true">
+        <variable name="LIST" expression=""  alwaysStopAt="true"/>
+        <variable name="ITEM_TYPE" expression=""  alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="Swiper" value="Swiper($CONTROLLER$).onChange {&#10;    value: Int32 => $END$&#10;}" description="Create swiper container with 'onChange' incident response" toReformat="true" toShortenFQNames="true">
+        <variable name="$CONTROLLER$" expression=""  alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="swiper" value="Swiper($CONTROLLER$).onChange {&#10;    value: Int32 => $END$&#10;}" description="Create swiper container with 'onChange' incident response" toReformat="true" toShortenFQNames="true">
+        <variable name="$CONTROLLER$" expression=""  alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="SwiperForEachLazy" value="Swiper($CONTROLLER$) {&#10;    LazyForEach($LIST$, itemGeneratorFunc: {item: $ITEM_TYPE$, index: Int64 =>&#10;        $END$&#10;    })&#10;}" description="Create high-performance list container with LazyForEach rendering controller" toReformat="true" toShortenFQNames="true">
+        <variable name="$CONTROLLER$" expression=""  alwaysStopAt="true"/>
+        <variable name="LIST" expression=""  alwaysStopAt="true"/>
+        <variable name="ITEM_TYPE" expression=""  alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="swiperForEachLazy" value="Swiper($CONTROLLER$) {&#10;    LazyForEach($LIST$, itemGeneratorFunc: {item: $ITEM_TYPE$, index: Int64 =>&#10;        $END$&#10;    })&#10;}" description="Create high-performance list container with LazyForEach rendering controller" toReformat="true" toShortenFQNames="true">
+        <variable name="$CONTROLLER$" expression=""  alwaysStopAt="true"/>
+        <variable name="LIST" expression=""  alwaysStopAt="true"/>
+        <variable name="ITEM_TYPE" expression=""  alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="SwiperOnAnimationStart" value="Swiper($CONTROLLER$).onAnimationStart({&#10;    index: Int32, targetIndex: Int32, event: SwiperAnimationEvent =>&#10;    $END$&#10;})" description="Create swiper component with 'onAnimationStart' incident response" toReformat="true" toShortenFQNames="true">
+        <variable name="$CONTROLLER$" expression=""  alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="swiperOnAnimationStart" value="Swiper($CONTROLLER$).onAnimationStart({&#10;    index: Int32, targetIndex: Int32, event: SwiperAnimationEvent =>&#10;    $END$&#10;})" description="Create swiper component with 'onAnimationStart' incident response" toReformat="true" toShortenFQNames="true">
+        <variable name="$CONTROLLER$" expression=""  alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="WaterFlowForEachLazy" value="WaterFlow() {&#10;    LazyForEach($LIST$, itemGeneratorFunc: {item: $ITEM_TYPE$, index: Int64 =>&#10;        $END$&#10;    })&#10;}" description="Create high-performance waterflow container with LazyForEach rendering controller" toReformat="true" toShortenFQNames="true">
+        <variable name="LIST" expression=""  alwaysStopAt="true"/>
+        <variable name="ITEM_TYPE" expression=""  alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="waterFlowForEachLazy" value="WaterFlow() {&#10;    LazyForEach($LIST$, itemGeneratorFunc: {item: $ITEM_TYPE$, index: Int64 =>&#10;        $END$&#10;    })&#10;}" description="Create high-performance waterflow container with LazyForEach rendering controller" toReformat="true" toShortenFQNames="true">
+        <variable name="LIST" expression=""  alwaysStopAt="true"/>
+        <variable name="ITEM_TYPE" expression=""  alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="ActionSheet" value="ActionSheet.show(&#10;    ActionSheetOptions(&#10;        &quot;$TITLE$&quot;,&#10;        &quot;$MESSAGE$&quot;,&#10;        $SHEETS$,&#10;        confirm:$CONFIRM$&#10;    )&#10;)" description="Create action sheet with default properties" toReformat="true" toShortenFQNames="true">
+        <variable name="TITLE" expression="" defaultValue="&quot;ActionSheet title&quot;" alwaysStopAt="true"/>
+        <variable name="MESSAGE" expression="" defaultValue="&quot;message&quot;" alwaysStopAt="true"/>
+        <variable name="SHEETS" expression="" defaultValue="sheets" alwaysStopAt="true"/>
+        <variable name="CONFIRM" expression="" defaultValue="confirm" alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_DIALOG" value="true"/>
+        </context>
+    </template>
+
+    <template name="actionSheet" value="ActionSheet.show(&#10;    ActionSheetOptions(&#10;        &quot;$TITLE$&quot;,&#10;        &quot;$MESSAGE$&quot;,&#10;        $SHEETS$,&#10;        confirm:$CONFIRM$&#10;    )&#10;)" description="Create action sheet with default properties" toReformat="true" toShortenFQNames="true">
+        <variable name="TITLE" expression="" defaultValue="&quot;ActionSheet title&quot;" alwaysStopAt="true"/>
+        <variable name="MESSAGE" expression="" defaultValue="&quot;message&quot;" alwaysStopAt="true"/>
+        <variable name="SHEETS" expression="" defaultValue="sheets" alwaysStopAt="true"/>
+        <variable name="CONFIRM" expression="" defaultValue="confirm" alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_DIALOG" value="true"/>
+        </context>
+    </template>
+
+    <template name="AlertDialog" value="AlertDialog.show(&#10;    ActionSheetOptions(&#10;        &quot;$TITLE$&quot;,&#10;        &quot;$MESSAGE$&quot;,&#10;        $SHEETS$,&#10;        confirm:$CONFIRM$&#10;    )&#10;)" description="Create alert dialog with default properties" toReformat="true" toShortenFQNames="true">
+        <variable name="TITLE" expression="" defaultValue="&quot;AlertDialog title&quot;" alwaysStopAt="true"/>
+        <variable name="MESSAGE" expression="" defaultValue="&quot;message&quot;" alwaysStopAt="true"/>
+        <variable name="SHEETS" expression="" defaultValue="sheets" alwaysStopAt="true"/>
+        <variable name="CONFIRM" expression="" defaultValue="confirm" alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_DIALOG" value="true"/>
+        </context>
+    </template>
+
+    <template name="alertDialog" value="AlertDialog.show(&#10;    ActionSheetOptions(&#10;        &quot;$TITLE$&quot;,&#10;        &quot;$MESSAGE$&quot;,&#10;        $SHEETS$,&#10;        confirm:$CONFIRM$&#10;    )&#10;)" description="Create alert dialog with default properties" toReformat="true" toShortenFQNames="true">
+        <variable name="TITLE" expression="" defaultValue="&quot;AlertDialog title&quot;" alwaysStopAt="true"/>
+        <variable name="MESSAGE" expression="" defaultValue="&quot;message&quot;" alwaysStopAt="true"/>
+        <variable name="SHEETS" expression="" defaultValue="sheets" alwaysStopAt="true"/>
+        <variable name="CONFIRM" expression="" defaultValue="confirm" alwaysStopAt="true"/>
+        <context>
+            <option name="Cangjie_DIALOG" value="true"/>
+        </context>
+    </template>
+
+    <template name="DatePickerDialog" value="DatePickerDialog.show(&#10;    options = DatePickerDialogOptions(&#10;        onDateAccept: {&#10;            value=&gt; $ACCEPT_CODE$&#10;        },&#10;        onCancel: {&#10;            =&gt; $CANCEL_CODE$&#10;        },&#10;        onDateChange: {&#10;            value=&gt; $CHANGE_CODE$&#10;        }&#10;    )&#10;)$END$" description="Create datepicker dialog with incident responses of default events" toReformat="true" toShortenFQNames="true">
+        <variable name="ACCEPT_CODE" expression="" defaultValue="" alwaysStopAt="true" />
+        <variable name="CANCEL_CODE" expression="" defaultValue="" alwaysStopAt="true" />
+        <variable name="CHANGE_CODE" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Cangjie_DIALOG" value="true"/>
+        </context>
+    </template>
+
+    <template name="datePickerDialog" value="DatePickerDialog.show(&#10;    options = DatePickerDialogOptions(&#10;        onDateAccept: {&#10;            value=&gt; $ACCEPT_CODE$&#10;        },&#10;        onCancel: {&#10;            =&gt; $CANCEL_CODE$&#10;        },&#10;        onDateChange: {&#10;            value=&gt; $CHANGE_CODE$&#10;        }&#10;    )&#10;)$END$" description="Create datepicker dialog with incident responses of default events" toReformat="true" toShortenFQNames="true">
+        <variable name="ACCEPT_CODE" expression="" defaultValue="" alwaysStopAt="true" />
+        <variable name="CANCEL_CODE" expression="" defaultValue="" alwaysStopAt="true" />
+        <variable name="CHANGE_CODE" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Cangjie_DIALOG" value="true"/>
+        </context>
+    </template>
+
+    <template name="Builder" value="@Builder&#10;func $FUNCTION_NAME$() {&#10;  $END$&#10;}" description="Create function decorated by @Builder" toReformat="true" toShortenFQNames="true">
+        <variable name="FUNCTION_NAME" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="builder" value="@Builder&#10;func $FUNCTION_NAME$() {&#10;  $END$&#10;}" description="Create function decorated by @Builder" toReformat="true" toShortenFQNames="true">
+        <variable name="FUNCTION_NAME" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Cangjie_COMPONENT" value="true"/>
+        </context>
+    </template>
+
+    <template name="Navigation" value="Navigation() {&#10;    $END$&#10;}" description="Create navigation component" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="Cangjie_COMPONENT" value="true" />
+        </context>
+    </template>
+
+    <template name="navigation" value="Navigation() {&#10;    $END$&#10;}" description="Create navigation component" toReformat="false" toShortenFQNames="true">
+        <context>
+            <option name="Cangjie_COMPONENT" value="true" />
+        </context>
+    </template>
+
+    <template name="Entry" value="@Entry&#10;@Component&#10;class $CLASS_NAME$ {&#10;    func build() {&#10;        $END$&#10;    }&#10;}" description="Create entry component with build method" toReformat="true" toShortenFQNames="true">
+        <variable name="CLASS_NAME" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Cangjie_CLASS" value="true" />
+        </context>
+    </template>
+
+    <template name="entry" value="@Entry&#10;@Component&#10;class $CLASS_NAME$ {&#10;    func build() {&#10;        $END$&#10;    }&#10;}" description="Create entry component with build method" toReformat="true" toShortenFQNames="true">
+        <variable name="CLASS_NAME" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Cangjie_CLASS" value="true" />
+        </context>
+    </template>
+
+    <template name="ClassReusable" value="@Reusable&#10;@Component&#10;class $CLASS_NAME$ {&#10;    func build() {&#10;        $ITEM$&#10;    }&#10;    &#10;    protected override func aboutToReuse(val: ReuseParams) {&#10;        $END$&#10;    }&#10;}" description="Create class decorated by @Reusable" toReformat="true" toShortenFQNames="true">
+        <variable name="CLASS_NAME" expression="" defaultValue="" alwaysStopAt="true" />
+        <variable name="ITEM" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Cangjie_CLASS" value="true" />
+        </context>
+    </template>
+
+    <template name="classReusable" value="@Reusable&#10;@Component&#10;class $CLASS_NAME$ {&#10;    func build() {&#10;        $ITEM$&#10;    }&#10;    &#10;    protected override func aboutToReuse(val: ReuseParams) {&#10;        $END$&#10;    }&#10;}" description="Create class decorated by @Reusable" toReformat="true" toShortenFQNames="true">
+        <variable name="CLASS_NAME" expression="" defaultValue="" alwaysStopAt="true" />
+        <variable name="ITEM" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Cangjie_CLASS" value="true" />
+        </context>
+    </template>
+
+    <template name="Dialog" value="@CustomDialog&#10;class $NAME$ {&#10;    var controller: Option&lt;CustomDialogController&gt; = Option.None&#10;    func build() {&#10;       $END$&#10;    }&#10;}" description="Create dialog component with build method" toReformat="true" toShortenFQNames="true">
+        <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Cangjie_CLASS" value="true" />
+        </context>
+    </template>
+
+    <template name="dialog" value="@CustomDialog&#10;class $NAME$ {&#10;    var controller: Option&lt;CustomDialogController&gt; = Option.None&#10;    func build() {&#10;       $END$&#10;    }&#10;}" description="Create dialog component with build method" toReformat="true" toShortenFQNames="true">
+        <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Cangjie_CLASS" value="true" />
+        </context>
+    </template>
+
+    <template name="Comp" value="@Component&#10;class $CLASS_NAME$ {&#10;    func build() {&#10;        $END$&#10;    }&#10;}" description="Create custom component with build method" toReformat="true" toShortenFQNames="true">
+        <variable name="CLASS_NAME" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Cangjie_CLASS" value="true" />
+        </context>
+    </template>
+
+    <template name="comp" value="@Component&#10;class $CLASS_NAME$ {&#10;    func build() {&#10;        $END$&#10;    }&#10;}" description="Create custom component with build method" toReformat="true" toShortenFQNames="true">
+        <variable name="CLASS_NAME" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Cangjie_CLASS" value="true" />
+        </context>
+    </template>
+
+    <template name="State" value="@State&#10;var $FIELD_NAME$: $FIELD_TYPE$ = $END$" description="Create @State variable" toReformat="true" toShortenFQNames="true">
+        <variable name="FIELD_NAME" expression="" defaultValue="" alwaysStopAt="true" />
+        <variable name="FIELD_TYPE" expression="complete()" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Cangjie_CLASS_FIELD" value="true" />
+        </context>
+    </template>
+
+    <template name="state" value="@State&#10;var $FIELD_NAME$: $FIELD_TYPE$ = $END$" description="Create @State variable" toReformat="true" toShortenFQNames="true">
+        <variable name="FIELD_NAME" expression="" defaultValue="" alwaysStopAt="true" />
+        <variable name="FIELD_TYPE" expression="complete()" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Cangjie_CLASS_FIELD" value="true" />
+        </context>
+    </template>
+
+</templateSet>

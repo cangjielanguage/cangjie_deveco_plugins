@@ -1,0 +1,38 @@
+{
+  "currentIdeVersion": "7.0",
+  "demandSrcPackages": [],
+  "demandBinPackages": ["stdx", "tpc"],
+  "loaderSoLibs": [
+    "libark_interop_loader.so",
+    "libc++.so"
+  ],
+  "asanRuntimeLibs": [
+    "libcangjie-runtime.so"
+  ],
+  "stdDemandAllLibs": [
+    "libcangjie-std-ast.so",
+    "libcangjie-std-unittest.common.so",
+    "libcangjie-std-unittest.diff.so",
+    "libcangjie-std-unittest.mock.internal.so",
+    "libcangjie-std-unittest.mock.so",
+    "libcangjie-std-unittest.prop_test.so",
+    "libcangjie-std-unittest.so",
+    "libcangjie-std-reflect.so"
+  ],
+  "binPkgDependLibsMapper": {
+    "stdx.crypto.keys": [
+      "stdx.crypto.keysFFI"
+    ],
+    "stdx.crypto.x509": [
+      "stdx.crypto.x509FFI"
+    ],
+    "stdx.net.tls": [
+      "stdx.net.tlsFFI"
+    ]
+  },
+  "tpcDependLibs": [
+    "libtpc.AbilityKit.interop_libs.uiability_interop.so",
+    "libtpc.CoreFileKit.backupextensionability_interop.so",
+    "libtpc.AbilityKit.interop_libs.ability_stage_interop.so"
+  ]
+}

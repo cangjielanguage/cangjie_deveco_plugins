@@ -1,0 +1,42 @@
+<!--
+  Copyright (c) Huawei Technologies Co., Ltd. 2026-2026. All rights reserved.
+
+  This source file is part of the Cangjie project, licensed under Apache-2.0
+  with Runtime Library Exception.
+
+  See https://cangjie-lang.cn/pages/LICENSE for license information.
+-->
+<idea-plugin>
+    <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.plugins.terminal</depends>
+
+    <extensionPoints>
+        <extensionPoint qualifiedName="com.huawei.cangjie.ohos.buildCangjieTestTaskProvider" interface="com.huawei.cangjie.testframework.testbuild.BuildCangjieTestProviderRepo"/>
+    </extensionPoints>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <runLineMarkerContributor language="Cangjie" id="CangjieTestRunLineMarkerProvider" implementationClass="com.huawei.cangjie.testframework.linemarker.CangjieTestRunLineMakerProvider"/>
+        <configurationType implementation="com.huawei.cangjie.testframework.configuration.CangjieOhosTestRunConfigurationType"/>
+        <configurationType implementation="com.huawei.cangjie.testframework.configuration.CangjieLocalTestRunConfigurationType"/>
+        <runConfigurationProducer implementation="com.huawei.cangjie.testframework.configuration.CangjieOhosTestConfigurationProducer"/>
+        <runConfigurationProducer implementation="com.huawei.cangjie.testframework.configuration.CangjieLocalTestConfigurationProducer"/>
+        <stepsBeforeRunProvider
+                implementation="com.huawei.cangjie.testframework.testbuild.CangjieTestBuildTaskProvider"/>
+        <programRunner implementation="com.huawei.cangjie.testframework.runner.CangjieTestProgramRunner"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.huawei.ohos">
+        <launchTasksExecutor
+                implementation="com.huawei.cangjie.testframework.runner.CangjieTestLaunchTaskExecutor" order="first"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.huawei.cangjie.ohos">
+        <buildCangjieTestTaskProvider
+                implementation="com.huawei.cangjie.testframework.testbuild.CangjieTestBuildTaskProvider"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.huawei.deveco.projectmodel.ohos">
+        <syncProject implementation="com.huawei.cangjie.testframework.sync.CangjieConfigurationSyncProject"/>
+    </extensions>
+
+</idea-plugin>

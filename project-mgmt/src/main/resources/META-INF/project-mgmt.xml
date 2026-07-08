@@ -1,0 +1,93 @@
+<!--
+  Copyright (c) Huawei Technologies Co., Ltd. 2026-2026. All rights reserved.
+
+  This source file is part of the Cangjie project, licensed under Apache-2.0
+  with Runtime Library Exception.
+
+  See https://cangjie-lang.cn/pages/LICENSE for license information.
+-->
+<idea-plugin>
+    <extensionPoints>
+        <extensionPoint qualifiedName="com.huawei.cangjie.updateProvider" interface="com.huawei.cangjie.projectmgmt.sync.upgrade.provider.CangjieUpdateProvider"/>
+        <extensionPoint qualifiedName="com.huawei.cangjie.envProvider" interface="com.huawei.cangjie.projectmgmt.env.CangjieEnvProvider"/>
+        <extensionPoint qualifiedName="com.huawei.cangjie.template.paramProvider" interface="com.huawei.cangjie.projectmgmt.template.CangjieTemplateParamProvider"/>
+    </extensionPoints>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="com.huawei.cangjie.projectmgmt.utils.CangjieStartupActivity" />
+        <notificationGroup displayType="STICKY_BALLOON" id="Cangjie Project Mgmt Group" />
+        <notificationGroup displayType="STICKY_BALLOON" id="Cangjie.Project.Mgmt.Notification" isLogByDefault="true"/>
+        <notificationGroup displayType="STICKY_BALLOON" id="Cangjie.Project.Mgmt.Notification.AddCodeLinkerConfig" isLogByDefault="true"/>
+        <notificationGroup displayType="BALLOON" id="Cangjie.Project.Mgmt.Expires.Notification" isLogByDefault="true"/>
+        <treeStructureProvider implementation="com.huawei.cangjie.projectmgmt.utils.CangjieFileHider" id="CangjieFileHider" order="last"/>
+        <daemon.highlightInfoFilter implementation="com.huawei.cangjie.projectmgmt.filter.JsonHighlightInfoFilter" order="first"/>
+        <projectService serviceInterface="com.huawei.cangjie.projectmgmt.sync.dts2cj.Dts2cjViewManager"
+                        serviceImplementation="com.huawei.cangjie.projectmgmt.sync.dts2cj.Dts2cjViewManager"/>
+
+        <applicationService
+                serviceImplementation="com.huawei.cangjie.projectmgmt.settings.CangjieSettings"/>
+        <applicationService
+                serviceImplementation="com.huawei.cangjie.projectmgmt.settings.CangjieOptimizationProfileSettings"/>
+        <projectService serviceImplementation="com.huawei.cangjie.projectmgmt.settings.ProjectOptimizationSettingsService"/>
+        <fileType name="Profdata File" language="" implementationClass="com.huawei.cangjie.projectmgmt.dialog.optimization.ProfdataFile" fieldName="INSTANCE" extensions="profdata"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.huawei">
+        <templateProvider implementation="com.huawei.cangjie.projectmgmt.template.CangjieTemplateProvider"/>
+        <renderInitTemplate implementation="com.huawei.cangjie.projectmgmt.render.CangjieInitProjectTemplate" order="first"/>
+        <renderInitTemplate implementation="com.huawei.cangjie.projectmgmt.render.CangjieInitLibraryTemplate" order="first"/>
+        <renderInitTemplate implementation="com.huawei.cangjie.projectmgmt.render.CangjieInitShareTemplate" order="first"/>
+        <renderInitTemplate implementation="com.huawei.cangjie.projectmgmt.render.CangjieInitAbilityTemplate" order="first"/>
+        <renderInitTemplate implementation="com.huawei.cangjie.projectmgmt.render.CangjieInitModuleTemplate" order="first"/>
+        <renderInitTemplate implementation="com.huawei.cangjie.projectmgmt.render.CangjieEnableHarTemplate" order="first"/>
+        <projectNodeProvider implementation="com.huawei.cangjie.projectmgmt.nodes.CangjieNodeProvider" order="first"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.huawei.deveco.projectmodel.ohos">
+        <preSync implementation="com.huawei.cangjie.projectmgmt.sync.CangjieProjectSyncImpl" order="last"/>
+        <syncModule implementation="com.huawei.cangjie.projectmgmt.sync.CangjieModuleSyncImpl" order="first"/>
+        <postSync implementation="com.huawei.cangjie.projectmgmt.sync.upgrade.welcome.CangjieUpdateChecker" id="CangjieUpgradeCheck" order="last"/>
+        <postSync implementation="com.huawei.cangjie.projectmgmt.sync.dts2cj.Dts2cjCopySync" id="CangjieDts2cjCopySync" order="last"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.huawei.cangjie">
+        <updateProvider id="CangjieTomlUpdateImpl" implementation="com.huawei.cangjie.projectmgmt.sync.upgrade.impl.CangjieTomlUpdateImpl" order="first"/>
+        <updateProvider id="CangjieCfgUpdateImpl" implementation="com.huawei.cangjie.projectmgmt.sync.upgrade.impl.CangjieCfgUpdateImpl" order="after CangjieTomlUpdateImpl"/>
+        <updateProvider id="CangjieSdkInOhosTomlUpdateImpl"
+                        implementation="com.huawei.cangjie.projectmgmt.sync.upgrade.impl.CangjieSdkInOhosTomlUpdateImpl"
+                        order="after CangjieCfgUpdateImpl"/>
+        <updateProvider id="CangjieIntegrationUpdateImpl" implementation="com.huawei.cangjie.projectmgmt.sync.upgrade.impl.CangjieIntegrationUpdateImpl" order="after CangjieSdkInOhosTomlUpdateImpl"/>
+        <updateProvider id="CangjieAsanTomlUpdateImpl" implementation="com.huawei.cangjie.projectmgmt.sync.upgrade.impl.CangjieAsanTomlUpdateImpl" order="after CangjieIntegrationUpdateImpl"/>
+        <updateProvider id="CangjieOptimizationProfileUpdateImpl" implementation="com.huawei.cangjie.projectmgmt.sync.upgrade.impl.CangjieOptimizationProfileUpdateImpl" order="after CangjieAsanTomlUpdateImpl"/>
+
+        <settingProvider id="CangjiePackageNameConfig" implementation="com.huawei.cangjie.projectmgmt.settings.CangjieConfigurable"/>
+        <settingProvider id="CangjieOptimizationProfileConfig" implementation="com.huawei.cangjie.projectmgmt.settings.CangjieOptimizationProfileConfigurable"/>
+    </extensions>
+
+    <actions>
+            <action id="Cangjie.GenerateCangjieEmptyPage" class="com.huawei.cangjie.projectmgmt.action.page.GenerateEmptyPage" icon="/icons/menu/ability.svg">
+                <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewDir"/>
+            </action>
+        <action id="Cangjie.EnableCangjie" class="com.huawei.cangjie.projectmgmt.action.EnableCangjieAbilityAction" text="Cangjie(Interop)"
+                description="Create Cangjie ability in the current module" icon="/icons/menu/ability.svg">
+            <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewDir"/>
+        </action>
+        <action id="Cangjie.GenerateCangjieIDLEditor" class="com.huawei.cangjie.projectmgmt.action.GenerateCangjieIdlAction" text="Cangjie-ArkTS Interop API">
+            <add-to-group group-id="GenerateGroup" anchor="after" relative-to-action="DelegateMethods"/>
+        </action>
+        <action id="Cangjie.GenerateCangjieBindings" class="com.huawei.cangjie.projectmgmt.action.GenerateCangjieBindingsAction" text="Cangjie Bindings">
+            <add-to-group group-id="GenerateGroup" anchor="after" relative-to-action="Cangjie.GenerateCangjieIDLEditor"/>
+        </action>
+        <action id="Cangjie.GenerateOptimizationProfileAction" class="com.huawei.cangjie.projectmgmt.action.GenerateOptimizationProfileAction"
+                text="Generate Optimization Profile" description="Generate optimization profile">
+            <add-to-group group-id="RunMenu" anchor="after" relative-to-action="Attach to Process by Name"/>
+        </action>
+    </actions>
+    <extensions defaultExtensionNs="JavaScript">
+        <JsonSchema.ProviderFactory
+                implementation="com.huawei.cangjie.projectmgmt.schema.CjBuildProfileSchemaProviderFactory"/>
+    </extensions>
+    <extensions defaultExtensionNs="com.huawei.deveco.build">
+        <compileBuildListener implementation="com.huawei.cangjie.projectmgmt.listener.CangjieRunBuildListener"> </compileBuildListener>
+    </extensions>
+</idea-plugin>

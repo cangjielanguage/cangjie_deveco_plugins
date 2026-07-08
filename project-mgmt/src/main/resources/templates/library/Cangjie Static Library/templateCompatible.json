@@ -1,0 +1,53 @@
+{
+  "id": "[Cangjie] Static Library",
+  "displayName": "[Cangjie] Static Library",
+  "description": "This template allows you to share code, Cangjie libraries, resources, and configuration files. It will be packaged with the caller. Cangjie Module only supports compatibleSdkVersion 20.",
+  "category": "library",
+  "baseProvider": "ohos",
+  "functionType": "lib",
+  "globalsFile": "parameter.json.ftl",
+  "recipeFile": "command.xml.ftl",
+  "templateIcon": "Cangjie Static Library.svg",
+  "templatePreviewImage": "",
+  "minCompileSdk": 12,
+  "addOnMinCompileSdk": 12,
+  "addOnMinCompatibleSdk": "5.0.0(12)",
+  "projectType": "Application",
+  "customizeModule": {
+	  "forbidNative": true,
+	  "supportCrossProject": false
+  },
+  "forbidNative": true,
+  "apiType": {
+	"Application": {
+		"stageMode" : {
+		  "minCompileSdk" : "5.0.0(12)",
+		  "developmentMode": {
+			"traditionalCode": [
+			  {
+				"uiSyntax": "eTS",
+				"deviceType": ["default", "tablet"],
+				"minCompatibleSdk": 12
+			  }
+			]
+		  }
+		}
+	}
+  },
+  "addOnApiType": {
+	"Application": {
+		"stageMode" : {
+		  "minCompatibleSdk" : "5.0.0(12)",
+		  "developmentMode": {
+			"traditionalCode": [
+			  {
+				"uiSyntax": "Cangjie",
+				"deviceType": ["default", "tablet"],
+			    "minCompatibleSdk": "5.0.0(12)"
+			  }
+			]
+		  }
+		}
+	}
+  }
+}

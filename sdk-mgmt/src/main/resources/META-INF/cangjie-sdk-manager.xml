@@ -1,0 +1,25 @@
+<idea-plugin>
+<!--
+  Copyright (c) Huawei Technologies Co., Ltd. 2026-2026. All rights reserved.
+
+  This source file is part of the Cangjie project, licensed under Apache-2.0
+  with Runtime Library Exception.
+
+  See https://cangjie-lang.cn/pages/LICENSE for license information.
+-->
+    <depends>com.huawei.deveco.hvigor</depends>
+    <extensionPoints>
+        <extensionPoint qualifiedName="com.huawei.cangjie.sdkmanager.compontentProvider" interface="com.huawei.cangjie.sdkmanager.component.CangjieComponentProvider"/>
+    </extensionPoints>
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup displayType="STICKY_BALLOON" id="Cangjie.Sdk.Manager.Notification" isLogByDefault="true"/>
+        <stacktrace.fold substring="[Error Detail]" />
+    </extensions>
+    <extensions defaultExtensionNs="com.huawei.deveco.hvigor">
+        <filterFactory implementation="com.huawei.cangjie.build.filter.CangjieBuildFilterFactory"/>
+        <extendEnvProvider implementation="com.huawei.cangjie.build.env.CangjieBuildEnvImpl"/>
+    </extensions>
+    <extensions defaultExtensionNs="com.huawei.deveco.projectmodel.ohos">
+        <projectInit implementation="com.huawei.cangjie.sdkmanager.sync.CangjieSdkSync" order="first"/>
+    </extensions>
+</idea-plugin>

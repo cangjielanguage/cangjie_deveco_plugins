@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  Copyright (c) Huawei Technologies Co., Ltd. 2026-2026. All rights reserved.
+
+  This source file is part of the Cangjie project, licensed under Apache-2.0
+  with Runtime Library Exception.
+
+  See https://cangjie-lang.cn/pages/LICENSE for license information.
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huawei.cjprofiler.dao.mapper.CjVmProfilerMapper">
+    <select id="selectCjHeapStats" resultType="com.huawei.deveco.insight.ohos.ability.arkmemory.entity.HeapStats">
+        SELECT heap_stats_id AS id,
+               count,
+               max_size      AS maxSize, size, start_time AS timestamp
+        FROM cj_heap_stats
+        WHERE (start_time >= #{startTime}
+          AND start_time &lt;= #{endTime}
+          AND tid = #{tid})
+    </select>
+
+    <select id="selectCjHeapUsages" resultType="com.huawei.deveco.insight.ohos.ability.arkmemory.entity.HeapUsages">
+        SELECT used_size  AS usedSize,
+               total_size AS totalSize,
+               start_time AS timestamp
+        FROM cj_heap_usage
+        WHERE (start_time >= #{startTime}
+          AND start_time &lt;= #{endTime}
+          AND tid = #{tid})
+    </select>
+
+    <select id="selectCjHeapDumps" resultType="com.huawei.deveco.insight.ohos.ability.arkmemory.entity.HeapSnapshot">
+        SELECT seq_num AS id,
+               raw_id  AS rawId,
+               start_time AS timestamp,
+            duration,
+            file_size AS fileSize,
+            number_switch AS isFilterNumber
+        FROM cj_heap_dump
+        WHERE (start_time &lt;= #{endTime}
+          AND (start_time + duration) &gt;= #{startTime})
+    </select>
+
+    <insert id="insertCjHeapStats" parameterType="java.util.List" useGeneratedKeys="false">
+        INSERT INTO cj_heap_stats (tid, heap_stats_id, count, size, max_size, start_time)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{tid}, #{item.id}, #{item.count}, #{item.size}, #{item.maxSize}, #{item.timestamp})
+        </foreach>
+    </insert>
+
+    <insert id="insertCjHeapUsages" parameterType="java.util.List" useGeneratedKeys="false">
+        INSERT INTO cj_heap_usage (tid, used_size, total_size, start_time)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{tid}, #{item.usedSize}, #{item.totalSize}, #{item.timestamp})
+        </foreach>
+    </insert>
+
+    <insert id="insertCjHeapDumps" parameterType="java.util.List" useGeneratedKeys="false">
+        INSERT INTO cj_heap_dump (seq_num, raw_id, start_time, duration, file_size, number_switch)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id}, #{item.rawId}, #{item.timestamp}, #{item.duration}, #{item.fileSize}, #{item.isFilterNumber})
+        </foreach>
+    </insert>
+</mapper>
