@@ -1,0 +1,39 @@
+<idea-plugin xmlns:xi="http://www.w3.org/2001/XInclude">
+<!--
+  Copyright (c) Huawei Technologies Co., Ltd. 2026-2026. All rights reserved.
+
+  This source file is part of the Cangjie project, licensed under Apache-2.0
+  with Runtime Library Exception.
+
+  See https://cangjie-lang.cn/pages/LICENSE for license information.
+-->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.plugins.terminal</depends>
+    <extensions defaultExtensionNs="com.intellij">
+        <projectService serviceImplementation="com.huawei.deveco.cjfmt.core.ReformatCodeService"/>
+        <typingActionsExtension implementation="com.huawei.deveco.cjfmt.core.CangjieTypingActionsExtension" order="first"/>
+        <codeStyleSettingsProvider  implementation="com.huawei.deveco.cjfmt.settings.CangjieCodeStyleSettingsProvider"/>
+        <langCodeStyleSettingsProvider implementation="com.huawei.deveco.cjfmt.settings.CangjieLanguageCodeStyleSettingsProvider"/>
+        <postStartupActivity implementation="com.huawei.deveco.cjfmt.core.CjFormatStartupActivity"/>
+    </extensions>
+    <extensions defaultExtensionNs="com.huawei.deveco.projectmodel.ohos">
+        <syncProject implementation="com.huawei.deveco.cjfmt.core.SyncFormat"/>
+    </extensions>
+    <extensions defaultExtensionNs="org.jetbrains.plugins.terminal">
+        <localTerminalCustomizer implementation="com.huawei.deveco.terminal.CangjiePluginLocalTerminalCustomizer"/>
+    </extensions>
+    <actions>
+        <unregister id="ReformatCode"/>
+        <action id="ReformatCode" class="com.huawei.deveco.cjfmt.actions.CjReformatCodeAction" description="Reformat Code" text="Reformat Code">
+            <add-to-group group-id="CodeFormatGroup" anchor="before" relative-to-action="ShowReformatFileDialog"/>
+            <add-to-group group-id="ProjectViewPopupMenuModifyGroup" anchor="before" relative-to-action="OptimizeImports"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt L" />
+        </action>
+        <unregister id="ShowReformatFileDialog"/>
+        <action id="ShowReformatFileDialog" class="com.huawei.deveco.cjfmt.actions.CjReformatFileAction" description="Reformat File" text="Reformat File...">
+            <add-to-group group-id="CodeFormatGroup" anchor="before" relative-to-action="AutoIndentLines"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift L" />
+        </action>
+    </actions>
+    <xi:include href="/META-INF/cjlint.xml" xpointer="xpointer(/idea-plugin/*)"/>
+</idea-plugin>

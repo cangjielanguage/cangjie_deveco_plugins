@@ -1,0 +1,40 @@
+<!--
+  Copyright (c) Huawei Technologies Co., Ltd. 2026-2026. All rights reserved.
+
+  This source file is part of the Cangjie project, licensed under Apache-2.0
+  with Runtime Library Exception.
+
+  See https://cangjie-lang.cn/pages/LICENSE for license information.
+-->
+<idea-plugin xmlns:xi="http://www.w3.org/2001/XInclude">
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.huawei.cangjie-support-plugin</id>
+    <idea-version since-build="243"/>
+    <name>Cangjie</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="support@huawei.com" url="https://www.huawei.com">Huawei</vendor>
+
+    <description><![CDATA[
+        Supports development of Cangjie Harmony applications with DevEco Studio.
+        <ul>
+          <li>Coding Assistance: Cangjie code completion, highlight, find usage, rename, and much more.</li>
+          <li>Debug: debug Cangjie Harmony application project.</li>
+          <li>Project Management: create and manage Cangjie Harmony application example project.</li>
+          <li>Build: build Cangjie project to HAP/APP.</li>
+          <li>Tools: format Cangjie code.</li>
+        </ul>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.huawei.ohos</depends>
+    <depends>com.huawei.deveco.insight</depends>
+    <xi:include href="/META-INF/cangjie-lsp.xml" xpointer="xpointer(/idea-plugin/*)" />
+    <xi:include href="/META-INF/project-mgmt.xml" xpointer="xpointer(/idea-plugin/*)" />
+    <xi:include href="/META-INF/cangjie-sdk-manager.xml" xpointer="xpointer(/idea-plugin/*)" />
+    <xi:include href="/META-INF/cjformat.xml" xpointer="xpointer(/idea-plugin/*)" />
+    <xi:include href="/META-INF/Cangjie-dap-plugin.xml" xpointer="xpointer(/idea-plugin/*)" />
+    <xi:include href="/META-INF/cj-profiler-foundation.xml" xpointer="xpointer(/idea-plugin/*)"/>
+    <xi:include href="/META-INF/cangjie-test-framework.xml" xpointer="xpointer(/idea-plugin/*)"/>
+</idea-plugin>

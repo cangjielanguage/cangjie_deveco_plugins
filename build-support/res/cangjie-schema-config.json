@@ -1,0 +1,60 @@
+{
+  "cangjieOptionsConfig": {
+    "cangjieOptions": {
+      "description": "Configurations related to cangjie compilation.",
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "path",
+          "abiFilters",
+          "strictCheckDependencies",
+          "arguments",
+          "collectSDKLibs",
+          "checkDeviceTypes"
+        ]
+      },
+      "properties": {
+        "path": {
+          "description": "Path of the cjpm.toml file (relative to the configuration file), for example, ./cjpm.toml.",
+          "type": "string"
+        },
+        "abiFilters": {
+          "description": "Defines the CPU architecture type of the system where the Cangjie application runs. Multiple CPU architecture types can be included, for example, Arm64-v8a.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "arm64-v8a",
+              "x86_64"
+            ]
+          },
+          "minItems": 1
+        },
+        "strictCheckDependencies": {
+          "description": "A build error is reported when a dependency is not installed.",
+          "type": "boolean",
+          "default": true
+        },
+        "arguments": {
+          "description": "Specifies cjpm compilation parameters, for example, --cfg",
+          "type": [
+            "string",
+            "array"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "collectSDKLibs": {
+          "description": "Package the runtime libraries, system libraries, and standard libraries used by the application.",
+          "type": "boolean"
+        },
+        "checkDeviceTypes": {
+          "description": "Check whether the configured deviceTypes is verified.",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  }
+}

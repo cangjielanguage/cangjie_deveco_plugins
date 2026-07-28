@@ -1,0 +1,184 @@
+{
+  "DEPENDENCY_NOT_INSTALLED_ERROR": {
+    "code": "01101001",
+    "message": "The current module '%s' has dependency which is not installed at its %s.",
+    "solutions": [
+        "Config cangjieOptions/strictCheckDependencies in build-profile.json5 to false to remove strict dependency checking."
+    ]
+  },
+  "CANGJIE_ABI_FILTERS_ERROR": {
+    "code": "01103001",
+    "message": "Unknown cangjie abiFilter %s.",
+    "solutions": [
+      "Value should be one of: 'arm64-v8a', 'x86_64'."
+    ]
+  },
+  "ABI_FILTERS_NOT_SUPPORTED": {
+    "code": "01103002",
+    "message": "'%s' not supported for Cangjie. At file: %s",
+    "solutions": [
+      "Please add '%s' or '%s' to cangjie/abiFilters."
+    ]
+  },
+  "CANGJIE_TOML_PATH_CONFIG_ERROR": {
+    "code": "01103003",
+    "message": "The configured cangjie %s in cangjieOptions/path is incorrect. At file: %s",
+    "solutions": [
+      "Configure the correct %s path."
+    ]
+  },
+  "CANGJIE_TOML_PATH_NOT_EXIST": {
+    "code": "01103004",
+    "message": "The configured cangjie %s in cangjieOptions/path does not exist. At file: %s",
+    "solutions": [
+      "Configure the correct %s path."
+    ]
+  },
+  "MODULE_TYPE_ERROR": {
+    "code": "01103011",
+    "message": "Unknown module type.",
+    "solutions": [
+      "Please set module type."
+    ]
+  },
+  "SUPPORT_DEVICE_TYPES_CONFIG_ERROR": {
+    "code": "01103012",
+    "message": "The deviceTypes is incorrectly configured. At file: %s",
+    "solutions": [
+      "For Cangjie, the deviceTypes configured in module.json5 only support phone and tablet devices."
+    ]
+  },
+  "TOML_CONTENT_CONFIG_ERROR": {
+    "code": "01103021",
+    "message": "Invalid toml config\n%s\n    at %s",
+    "solutions": [
+      "Check whether the format of the TOML content is correct."
+    ]
+  },
+  "TOML_DEPENDENCIES_PATH_NOT_EXIST": {
+    "code": "01103023",
+    "message": "Can not find %s.",
+    "solutions": [
+      "Check if the dependency path is incorrectly configured."
+    ]
+  },
+  "CAN_NOT_FOUND_SDK": {
+    "code": "01103031",
+    "message": "Unable to find the following components:%s",
+    "solutions": [
+      "Please verify the integrity of your SDK."
+    ]
+  },
+  "ABILITIES_SRC_ENTRY_IS_INCORRECT": {
+    "code": "01103041",
+    "message": "Abilities-srcEntry '%s' is incorrect. At file: %s",
+    "solutions": [
+      "In cangjie application, the srcEntry should be defined in the cangjie root package, for example, ohos_app_cangjie_entry.MainAbility"
+    ]
+  },
+  "MODULE_SRC_ENTRY_IS_INCORRECT": {
+    "code": "01103042",
+    "message": "%s",
+    "solutions": [
+      "In cangjie application, the srcEntry should be defined in the cangjie root package, for example, ohos_app_cangjie_entry.MyAbilityStage"
+    ]
+  },
+  "MODULE_SRC_ENTRY_PACKAGE_IS_INCORRECT": {
+    "code": "01103043",
+    "message": "Invalid configuration of '%s' field. At file: %s",
+    "solutions": [
+      "If the module contains the ArkTS code, the ArkTS code must be used as the entry.",
+      "Relative file path(like ./**) is required for srcEntry."
+    ]
+  },
+  "MODULE_SRC_ENTRY_IS_NOT_ROOT_PACKAGE": {
+    "code": "01103044",
+    "message": "Module-srcEntry '%s' is incorrect. At file: %s",
+    "solutions": [
+      "Module-srcEntry should be defined in the cangjie root package, for example, ohos_app_cangjie_entry.MyAbilityStage"
+    ]
+  },
+  "MODULE_SRC_ENTRY_IS_NOT_FOUND": {
+    "code": "01103045",
+    "message": "Module-srcEntry '%s' not found. At file: %s",
+    "solutions": [
+      "If the module contains the ArkTS code, the ArkTS code must be used as the entry.",
+      "Make sure %s exists."
+    ]
+  },
+  "LOW_API_VERSION_ERROR": {
+    "code": "01103051",
+    "message": "The Cangjie project supports api version 12 or later. At file: %s",
+    "solutions": [
+      "Select api version 12 or later."
+    ]
+  },
+  "COMPATIBLE_SDK_VERSION_ERROR": {
+    "code": "01103052",
+    "message": "The Cangjie project supports compatibleSdkVersion 12 or later. At file: %s",
+    "solutions": [
+      "Change the value of compatibleSdkVersion to 12 or later."
+    ]
+  },
+  "ONLY_CANGJIE_HSP_NOT_SUPPORTED_ERROR": {
+    "code": "01103053",
+    "message": "The module '%s' is HSP and contains only Cangjie, it is currently not supported, only the ArkTS and Cangjie hybird HSP is supported.",
+    "solutions": [
+      "Please use ArkTS and Cangjie hybird HSP."
+    ]
+  },
+  "COMPATIBLE_SDK_LOWER_THAN_22_VERSION_ERROR": {
+    "code": "01103054",
+    "message": "When using the default Cangjie SDK, the Cangjie project does not support compatibleSdkVersion lower than 22. At file: %s",
+    "solutions": [
+      "Change the value of compatibleSdkVersion to 22 or higher."
+    ]
+  },
+  "COMPATIBLE_SDK_LOWER_THAN_20_VERSION_ERROR": {
+    "code": "01103055",
+    "message": "When using the compatible Cangjie SDK, the Cangjie project does not support compatibleSdkVersion lower than 20. At file: %s",
+    "solutions": [
+      "Change the value of compatibleSdkVersion to 20 or higher."
+    ]
+  },
+  "FILE_NOT_FOUNF_OR_UNEXCUTABLE": {
+    "code": "01104001",
+    "message": "Not an internal or external command, operable program, or batch file. At file: %s",
+    "solutions": [
+      "Check whether the file '%s' exists.",
+      "Check whether the file '%s' is executable."
+    ]
+  },
+  "NOT_FOUND_CJPM_HISTORY_FILE": {
+    "code": "01104002",
+    "message": "File %s not found",
+    "solutions": [
+    ]
+  },
+  "CJPM_HISTORY_CONTENT_INCORRECT": {
+    "code": "01104003",
+    "message": "The content of .cjpm-history file is incorrect. At file: %s",
+    "solutions": [
+    ]
+  },
+  "COPY_FILE_FAILED": {
+    "code": "01104004",
+    "message": "File copy failed. Reason: %s",
+    "solutions": [
+    ]
+  },
+  "DELETE_FILE_FAILED": {
+    "code": "01104005",
+    "message": "Failed to delete existing file: %s. Reason: %s",
+    "solutions": [
+    ]
+  },
+  "CURRENT_MODULE_NOT_SUPPORT_THE_DEVICE_TYPE": {
+    "code": "01106001",
+    "message": "The %s module '%s' that the module '%s' depends on does not support the device type: '%s', which may cause runtime exception on the device.",
+    "solutions": [
+      "Update the module configuration.",
+      "Select a compatible module that supports the target device types to prevent potential runtime exceptions."
+    ]
+  }
+}

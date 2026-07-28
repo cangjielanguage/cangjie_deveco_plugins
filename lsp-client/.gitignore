@@ -1,0 +1,13 @@
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+/.idea/dictionaries
+.DS_Store
+/.idea/
+/log.txt
+**/build
+/lsp/
+/src/main/gen/
+/src/main/antlr/org/antlr/jetbrains/parser/gen
+/src/main/antlr/cjgrammar/declarationParser/gen/

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  Copyright (c) Huawei Technologies Co., Ltd. 2026-2026. All rights reserved.
+
+  This source file is part of the Cangjie project, licensed under Apache-2.0
+  with Runtime Library Exception.
+
+  See https://cangjie-lang.cn/pages/LICENSE for license information.
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huawei.cjprofiler.dao.mapper.CjThreadMapper">
+    <select id="queryCjThreadState" resultType="string">
+        SELECT DISTINCT SUBSTR(cs.name, 20)
+        FROM callstack cs
+        WHERE cs.name LIKE 'H:CJTHREAD_CJThread%'
+          AND cs.ts - #{offset} + cs.dur &gt;= #{startTime}
+          AND cs.ts - #{offset} &lt;= #{endTime}
+          AND cs.name NOT LIKE 'H:CJTHREAD_CJThreadSetName%'
+          AND cs.dur IS NOT NULL
+    </select>
+
+    <select id="queryCjThreadSliceInfo"
+            resultType="com.huawei.cjprofiler.model.po.cjthread.CjThreadSliceInfoPo">
+        SELECT DISTINCT SUBSTR(cs.name, 20)  as state,
+                        #{cjThreadId}        as cjThreadId,
+                        ts - #{offset}       as startTime,
+                        ts - #{offset} + dur as endTime,
+                        dur                  as duration,
+                        p.pid                as processId,
+                        th.tid               as threadId
+        FROM callstack cs
+                 LEFT JOIN thread AS th ON th.id = cs.parent_id
+                 LEFT JOIN process AS p ON th.ipid = p.ipid
+        WHERE cs.cookie = #{cjThreadId}
+          and cs.name LIKE 'H:CJTHREAD_CJThread%'
+          AND cs.ts - #{offset} + cs.dur &gt;= #{startTime}
+          AND cs.ts - #{offset} &lt;= #{endTime}
+          AND cs.name NOT LIKE 'H:CJTHREAD_CJThreadSetName%'
+          AND cs.dur IS NOT NULL
+    </select>
+
+    <select id="queryCjThreadList" resultType="com.huawei.cjprofiler.model.vo.cjthread.CjThreadInfoVo">
+        SELECT cs.cookie                            as cjThreadId,
+               SUBSTR(c.name, INSTR(name, ' ') + 1) as cjThreadName,
+               pid                                  as processId
+        FROM (SELECT DISTINCT cookie, pid
+              FROM callstack cs
+                       LEFT JOIN thread AS th ON th.id = cs.parent_id
+                       LEFT JOIN process AS p ON th.ipid = p.ipid
+              WHERE cs.name LIKE 'H:CJTHREAD_%'
+                AND ts - #{offset} + dur &gt;= #{startTime}
+                AND ts - #{offset} &lt;= #{endTime}
+                AND dur IS NOT NULL) cs
+                 LEFT JOIN callstack c ON cs.cookie = c.cookie
+            AND c.name LIKE 'H:CJTHREAD_CJThreadSetName %'
+    </select>
+
+    <select id="queryCjThreadLaneList"
+            resultType="com.huawei.cjprofiler.model.po.cjthread.CjThreadSliceInfoPo">
+        SELECT DISTINCT #{state}             as state,
+                        cookie               as cjThreadId,
+                        ts - #{offset}       as startTime,
+                        ts - #{offset} + dur AS endTime,
+                        dur                  as duration
+        FROM callstack cs
+                 LEFT JOIN thread AS th ON th.id = cs.parent_id
+                 LEFT JOIN process AS p ON th.ipid = p.ipid
+        WHERE cs.name LIKE 'H:CJTHREAD_CJThread' || #{state}
+          AND cs.ts - #{offset} + cs.dur &gt;= #{startTime}
+          AND cs.ts - #{offset} &lt;= #{endTime}
+          AND cs.dur IS NOT NULL
+        <if test="list != null and list.size() > 0">
+            AND p.pid in
+            <foreach item="pid" index="index" collection="list" open="(" close=")" separator=",">
+                #{pid}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="queryCjThreadTotalLaneList"
+            resultType="com.huawei.cjprofiler.model.po.cjthread.CjThreadSliceInfoPo">
+        SELECT DISTINCT SUBSTR(cs.name, 20)  as state,
+                        cookie               as cjThreadId,
+                        ts - #{offset}       as startTime,
+                        ts - #{offset} + dur AS endTime,
+                        dur                  as duration
+        FROM callstack cs
+                 LEFT JOIN thread AS th ON th.id = cs.parent_id
+                 LEFT JOIN process AS p ON th.ipid = p.ipid
+        WHERE cs.name LIKE 'H:CJTHREAD_CJThread%'
+          AND cs.ts - #{offset} + cs.dur &gt;= #{startTime}
+          AND cs.ts - #{offset} &lt;= #{endTime}
+          AND cs.name NOT LIKE 'H:CJTHREAD_CJThreadSetName%'
+          AND cs.dur IS NOT NULL
+        <if test="list != null and list.size() > 0">
+            AND p.pid in
+            <foreach item="pid" index="index" collection="list" open="(" close=")" separator=",">
+                #{pid}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="queryCjThreadProcessList" resultType="com.huawei.deveco.insight.ohos.model.vo.concurrency.ProcessListInfoVo">
+        select p.pid as processId, p.name as processName
+        from callstack as cs
+                 left join thread as th on th.id = cs.parent_id
+                 left join process as p on th.ipid = p.ipid
+        where cs.name LIKE 'H:CJTHREAD_CJThread%'
+          AND cs.name NOT LIKE 'H:CJTHREAD_CJThreadSetName%'
+          and NOT (( cs.ts + cs.dur &lt; (#{startTime} + #{offset})) OR ( cs.ts &gt; (#{endTime} + #{offset}) ))
+        GROUP BY p.pid;
+    </select>
+</mapper>

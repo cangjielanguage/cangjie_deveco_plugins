@@ -1,0 +1,10 @@
+{
+  "id": "[Cangjie] Hybrid Static Library",
+  "displayName": "[Cangjie] Hybrid Static Library",
+  "description": "This template allows you to share code, Cangjie libraries, C++ libraries, resources, and configuration files. It will be packaged with the caller. Cangjie Module only supports compatibleSdkVersion 22.",
+  "category": "other",
+  "functionType": "basic",
+  "globalsFile": "parameter.json.ftl",
+  "recipeFile": "command.xml.ftl",
+  "minCompatibleSdk": 12
+}

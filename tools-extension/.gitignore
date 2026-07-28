@@ -1,0 +1,8 @@
+/build/
+/.gradle/
+/.idea/
+/cjformat/build/
+/common/build/
+/cjlint/build/
+/quality-common/build/
+/cangjie-test-framework/build/

@@ -1,0 +1,22 @@
+/node_modules
+/.idea
+
+# local test
+/template/ohosProject-master
+
+# ts编译生成的js和js.map
+src/**/*.js
+test/**/*.js
+**/*.js.map
+**/*.d.ts
+
+index.js
+test/temp
+
+package-lock.json
+!test/resources/**/*.js
+/test/resources/common/NONWINDOWS/
+/test/resources/common/WINDOWS/
+
+# test coverage
+/coverage

@@ -1,0 +1,16 @@
+/docs/
+/node_modules/
+/test/
+/.cloudbuild/
+/scripts/
+.npmignore
+tslint.json
+tsconfig.json
+*.log
+/src/**/*.ts
+index.ts
+!/src/**/*.d.ts
+**/*.js.map
+.eslintrc.js
+.idea
+**/*.patch
