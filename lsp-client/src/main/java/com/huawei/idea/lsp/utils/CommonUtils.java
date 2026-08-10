@@ -8,6 +8,8 @@
 
 package com.huawei.idea.lsp.utils;
 
+import com.huawei.idea.lsp.extend.ExtendRequestManager;
+
 import com.intellij.application.options.CodeStyle;
 import com.intellij.ide.IdeTooltip;
 import com.intellij.ide.IdeTooltipManager;
@@ -51,17 +53,17 @@ public class CommonUtils {
     /**
      * deleteTempLspBuildDir
      *
-     * @param lspBuildTempPath Path
+     * @param path Path
      */
-    public static void deleteTempLspBuildDir(Path lspBuildTempPath) {
-        if (!lspBuildTempPath.toFile().exists()) {
+    public static void tryDeleteDiretory(Path path) {
+        if (!Path path.toFile().exists()) {
             return;
         }
         ApplicationManager.getApplication().executeOnPooledThread(() -> {
             int retryCount = 20;
             while (retryCount > 0) {
-                deleteDirectory(lspBuildTempPath);
-                if (!lspBuildTempPath.toFile().exists()) {
+                deleteDirectory(Path path);
+                if (!path.toFile().exists()) {
                     return;
                 }
                 retryCount--;
@@ -92,7 +94,7 @@ public class CommonUtils {
                 }
             });
         } catch (IOException e) {
-            LOG.warn("Cangjie related LSP: retry to delete .cache/lsp_temp dir failed");
+            LOG.warn("Cangjie related LSP: retry to delete the dir failed " + path);
         }
     }
 
@@ -221,8 +223,8 @@ public class CommonUtils {
      * @param requestManager RequestManager
      */
     public static void timeoutCrashCheck(RequestManager requestManager) {
-        if (requestManager instanceof DefaultRequestManager defaultRequestManager) {
-            defaultRequestManager.checkStatus();
+        if (requestManager instanceof ExtendRequestManager extendRequestManager) {
+            extendRequestManager.checkStatus();
         }
     }
 }
