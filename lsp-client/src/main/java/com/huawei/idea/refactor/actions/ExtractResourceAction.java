@@ -15,6 +15,7 @@ import com.intellij.lang.refactoring.RefactoringSupportProvider;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -50,8 +51,11 @@ public class ExtractResourceAction extends RefactorBaseAction {
             return false;
         }
 
-        // 2. 获取当前光标处的元素
-        PsiElement element = file.findElementAt(editor.getCaretModel().getOffset());
+        // 2. 获取当前光标处的元素 (如果有选区，使用选区起始位置)
+        SelectionModel selectionModel = editor.getSelectionModel();
+        int offset = selectionModel.hasSelection()
+                ? selectionModel.getSelectionStart() : editor.getCaretModel().getOffset();
+        PsiElement element = file.findElementAt(offset);
         if (element == null) {
             return false;
         }

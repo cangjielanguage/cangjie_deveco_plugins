@@ -23,7 +23,7 @@ end: NL | SEMI;
 // Package Definition and Package Import
 
 preamble
-    : NL* packageHeader? (((EditorfoldStart | EditorfoldEnd) NL*)* importList ((EditorfoldStart | EditorfoldEnd) NL*)*)*
+    : NL* packageHeader? (((EditorfoldStart | EditorfoldEnd) NL*)* importList (EditorfoldEnd NL*)*)*
     ;
 
 packageHeader
@@ -156,7 +156,7 @@ upperBounds
 
 // for lsp
 classBody
-    : LCURL ((EditorfoldStart | EditorfoldEnd) NL*)* end*
+    : LCURL (end | (EditorfoldStart | EditorfoldEnd) NL*)*
          (classMemberDeclaration ((EditorfoldStart | EditorfoldEnd) NL*)*)*
       RCURL
     ;
@@ -230,7 +230,7 @@ interfaceDefinition
     ;
 
 interfaceBody
-    : LCURL ((EditorfoldStart | EditorfoldEnd) NL*)* end* (interfaceMemberDeclaration ((EditorfoldStart | EditorfoldEnd) NL*)*)* RCURL
+    : LCURL (end | (EditorfoldStart | EditorfoldEnd) NL*)* (interfaceMemberDeclaration ((EditorfoldStart | EditorfoldEnd) NL*)*)* RCURL
     ;
 
 interfaceMemberDeclaration
@@ -357,7 +357,7 @@ structDefinition
     ;
 
 structBody
-    : LCURL ((EditorfoldStart | EditorfoldEnd) NL*)* end*
+    : LCURL (end | (EditorfoldStart | EditorfoldEnd) NL*)*
         (structMemberDeclaration ((EditorfoldStart | EditorfoldEnd) NL*)*)*
       RCURL
     ;
@@ -450,7 +450,7 @@ extendType
     ;
 
 extendBody
-    : LCURL ((EditorfoldStart | EditorfoldEnd) NL*)* end* (extendMemberDeclaration ((EditorfoldStart | EditorfoldEnd) NL*)*)* RCURL
+    : LCURL (end | (EditorfoldStart | EditorfoldEnd) NL*)* (extendMemberDeclaration ((EditorfoldStart | EditorfoldEnd) NL*)*)* RCURL
     ;
 
 extendMemberDeclaration
@@ -469,7 +469,7 @@ foreignDeclaration
     ;
 
 foreignBody
-    : LCURL ((EditorfoldStart | EditorfoldEnd) NL*)* end* (foreignMemberDeclaration ((EditorfoldStart | EditorfoldEnd) NL*)*)* RCURL
+    : LCURL (end | (EditorfoldStart | EditorfoldEnd) NL*)* (foreignMemberDeclaration ((EditorfoldStart | EditorfoldEnd) NL*)*)* RCURL
     ;
 
 foreignMemberDeclaration
@@ -860,8 +860,8 @@ deconstructPattern
     ;
 
 matchExpression
-    : MATCH NL* LPAREN NL* expression NL* RPAREN NL* LCURL end* matchCase* RCURL
-    | MATCH NL* LCURL end* (CASE NL* (expression | WILDCARD) NL* DOUBLE_ARROW NL* (expressionOrDeclaration end+)* expressionOrDeclaration?)+ RCURL
+    : MATCH NL* LPAREN NL* expression NL* RPAREN NL* LCURL end* ((EditorfoldStart | EditorfoldEnd) NL*)* (matchCase ((EditorfoldStart | EditorfoldEnd) NL*)*)* RCURL
+    | MATCH NL* LCURL end* ((EditorfoldStart | EditorfoldEnd) NL*)* (CASE NL* (expression | WILDCARD) NL* DOUBLE_ARROW NL* (expressionOrDeclaration end+)* expressionOrDeclaration? ((EditorfoldStart | EditorfoldEnd) NL*)*)+ RCURL
     ;
 
 matchCase
