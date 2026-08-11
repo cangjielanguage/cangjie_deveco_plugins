@@ -9,6 +9,7 @@
 package com.huawei.idea.lsp.listener;
 
 import com.huawei.idea.lsp.launcher.CangjieLspConfiguration;
+import com.huawei.idea.lsp.utils.CommonUtils;
 import com.huawei.idea.notification.NotificationUtil;
 import com.huawei.idea.trace.TraceUtils;
 
@@ -22,7 +23,10 @@ import org.wso2.lsp4intellij.client.languageserver.serverdefinition.StartServerL
 import org.wso2.lsp4intellij.utils.ApplicationUtils;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -66,6 +70,8 @@ public class CangjieStartServerListener implements StartServerListener {
                 return;
             }
             PROJECT_CRASH_COUNT.computeIfPresent(this.project, (proj, crashCount) -> {
+                // delete cache directory before server restart to clear corrupted state
+                deleteLspCaches();
                 if (crashCount >= RESTART_TIMES) {
                     TraceUtils.trace(TraceUtils.Action.LSP_START, TraceUtils.Cause.CRASH);
                     return crashCount;
@@ -82,4 +88,14 @@ public class CangjieStartServerListener implements StartServerListener {
             });
         });
     }
+}
+
+private void deleteLspCaches() {
+    Path astCacheDir = Paths.get(Objects.requireNonNull(project.getBasePath()),
+        ".idea", ".deveco", "cangjie", ".cache", "astdata");
+    CommonUtils.tryDeleteDiretory(astCacheDir);
+
+    Path indexCacheDir = Paths.get(Objects.requireNonNull(project.getBasePath()),
+        ".idea", ".deveco", "cangjie", ".cache", "index");
+    CommonUtils.tryDeleteDiretory(indexCacheDir);
 }

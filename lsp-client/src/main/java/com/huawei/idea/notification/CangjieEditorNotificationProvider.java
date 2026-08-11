@@ -164,7 +164,7 @@ public class CangjieEditorNotificationProvider implements EditorNotificationProv
                         finalRequestManager.setRestarting(false);
                     }
                 });
-                CommonUtils.deleteTempLspBuildDir(lspBuildTempPath);
+                CommonUtils.tryDeleteDiretory(lspBuildTempPath);
             }
         }
     }
