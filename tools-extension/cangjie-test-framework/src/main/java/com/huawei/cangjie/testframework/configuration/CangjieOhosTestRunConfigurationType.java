@@ -20,7 +20,6 @@ import com.intellij.execution.configurations.SimpleConfigurationType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.NotNullLazyValue;
-import com.intellij.ui.LayeredIcon;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -46,9 +45,7 @@ public class CangjieOhosTestRunConfigurationType extends SimpleConfigurationType
                 NotNullLazyValue.lazy(new Supplier<Icon>() {
                     @Override
                     public Icon get() {
-                        LayeredIcon icon = new LayeredIcon(2);
-                        icon.setIcon(CangjieIcons.CANGJIE_TEST_ICON, 0);
-                        return icon;
+                        return CangjieIcons.CANGJIE_TEST_ICON;
                     }
                 }));
     }

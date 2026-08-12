@@ -432,7 +432,7 @@ public class TestUtil {
      * @return @Test class
      */
     public static PsiElement getTestClassElementByTestCase(@NotNull PsiElement psiElement) {
-        int toTestClassDeep = 8;
+        int toTestClassDeep = 12;
         PsiElement classDefinition = psiElement;
         for (int i = 0; i < toTestClassDeep; i++) {
             classDefinition = classDefinition.getParent();
