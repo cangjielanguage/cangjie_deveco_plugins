@@ -24,7 +24,6 @@ import com.intellij.openapi.actionSystem.ActionUiKind;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataContext;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.FileTypeManager;
@@ -55,8 +54,6 @@ import javax.swing.JTextArea;
  * @since 2026-05-04
  */
 public class OptimizationSettingsDialog extends DialogWrapper {
-    private static final Logger LOG = Logger.getInstance(OptimizationSettingsDialog.class);
-
     private static final String TARGET_RUN_ACTION_ID = "Run";
 
     private final Project project;

@@ -165,6 +165,9 @@ public class CangjieIntegrationUpdateImpl implements CangjieUpdateProvider {
             return true;
         }
         String rawPath = StringUtils.removeStart(buildSupportPath.trim(), LOCAL_DEPENDENCIES_PREFIX);
+        if (StringUtils.isBlank(rawPath)) {
+            return true;
+        }
         Path tgzPath = Paths.get(rawPath);
         if (!tgzPath.isAbsolute()) {
             tgzPath = Paths.get(ProjectUtil.getProjectPath(project), HVIGOR).resolve(tgzPath).normalize();

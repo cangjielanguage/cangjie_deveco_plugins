@@ -10,6 +10,6 @@
 {
   "dependencies": {
     "lib${cjPackageName}.so": "file:src/main/cangjie/types/lib${cjPackageName}",
-    "@cangjie/cjhybridcomponent": "1.0.0",
+    "@cangjie/cjhybridcomponent": "1.1.1",
   }
 }

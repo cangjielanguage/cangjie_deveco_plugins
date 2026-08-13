@@ -33,6 +33,7 @@ import com.intellij.util.messages.MessageBusConnection;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * CangjieStartupActivity
@@ -43,23 +44,30 @@ public class CangjieStartupActivity implements StartupActivity {
     private static final String BUILD_APP_ID = "OhosBuildAppAction";
     private static final String BUILD_HAP_ID = "OhosBuildHapAction";
     private static final String MAKE_MODULE_ID = "com.huawei.deveco.build.ohos.actions.MakeModuleAction";
+    private static final AtomicBoolean LISTENER_REGISTERED = new AtomicBoolean(false);
 
     @Override
     public void runActivity(@NotNull Project project) {
-        ApplicationManager.getApplication().getMessageBus().connect().subscribe(
-                AnActionListener.TOPIC, new AnActionListener() {
-                    @Override
-                    public void beforeActionPerformed(AnAction action, AnActionEvent event) {
-                        ApplicationManager.getApplication().executeOnPooledThread(
-                                () -> compileBuildTrace(project, action, event));
-                    }
-                });
+        if (LISTENER_REGISTERED.compareAndSet(false, true)) {
+            ApplicationManager.getApplication().getMessageBus().connect().subscribe(
+                    AnActionListener.TOPIC, new AnActionListener() {
+                        @Override
+                        public void beforeActionPerformed(AnAction action, AnActionEvent event) {
+                            ApplicationManager.getApplication().executeOnPooledThread(
+                                    () -> compileBuildTrace(action, event));
+                        }
+                    });
+        }
         Disposable projectDisposable = Disposer.newDisposable(project, "CangjiePluginConnectionsDisposable");
         MessageBusConnection connection = project.getMessageBus().connect(projectDisposable);
         connection.subscribe(ExecutionManager.EXECUTION_TOPIC, new CangjieExecutionManagerListener(project));
     }
 
-    private void compileBuildTrace(Project project, AnAction action, AnActionEvent event) {
+    private void compileBuildTrace(AnAction action, AnActionEvent event) {
+        Project project = event.getProject();
+        if (project == null) {
+            return;
+        }
         ProjectModel projectModel = CommonProjectUtil.getProjectModel(project);
         if (!FileUtils.isCangjieProject(projectModel)) {
             return;

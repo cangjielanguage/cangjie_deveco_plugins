@@ -156,7 +156,8 @@ public class JsonHighlightInfoFilter implements HighlightInfoFilter {
 
     private boolean handleModuleJson5(HighlightInfo highlightInfo, PsiFile file) {
         if (!"Relative file path(like ./**) is required for srcEntry.".equals(highlightInfo.getDescription())
-            && !"Set srcEntry to a relative file path (for example, ./**).".equals(highlightInfo.getDescription())) {
+            && !"Set srcEntry to a relative file path (for example, ./**).".equals(highlightInfo.getDescription())
+            && !"将“srcEntry”设置为相对文件路径（例如./**）。".equals(highlightInfo.getDescription())) {
             return true;
         }
         PsiElement element = file.findElementAt(highlightInfo.getActualStartOffset());
