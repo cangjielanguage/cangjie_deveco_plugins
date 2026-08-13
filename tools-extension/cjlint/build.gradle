@@ -1,3 +1,13 @@
+plugins {
+    id 'org.jetbrains.intellij.platform.module'
+}
+
 dependencies {
-    implementation(project(path: ":quality-common", configuration: "instrumentedJar"))
+    implementation(project(path: ":quality-common"))
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src/main/java']
+    }
 }

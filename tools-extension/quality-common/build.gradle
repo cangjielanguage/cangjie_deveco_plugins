@@ -1,0 +1,9 @@
+plugins {
+    id 'org.jetbrains.intellij.platform.module'
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src/main/java']
+    }
+}

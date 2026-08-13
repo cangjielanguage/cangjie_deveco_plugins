@@ -67,6 +67,7 @@ import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -181,7 +182,9 @@ public class CjlintEngine extends CodeLinterEngineProvider {
             LOGGER.debug("createProjectCacheDirectory: project cache folder create: {}", String.valueOf(isCreated));
         }
         // Delete the last cache files
-        FileUtil.deleteChild(projectCacheFolder);
+        if (StringUtils.isNotEmpty(projectCachePath)) {
+            FileUtil.deleteChild(projectCacheFolder);
+        }
         return projectCacheFolder.getCanonicalPath();
     }
 

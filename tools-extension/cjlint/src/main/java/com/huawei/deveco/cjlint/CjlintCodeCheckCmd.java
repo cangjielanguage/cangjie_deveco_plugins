@@ -266,10 +266,14 @@ public class CjlintCodeCheckCmd extends CodeCheckCmd {
                     throw new ExecutionException(message);
                 }
                 editCheckResult();
-                FileUtils.delete(new File(cjOutPath));
+                if (StringUtils.isNotEmpty(cjOutPath)) {
+                    FileUtils.delete(new File(cjOutPath));
+                }
             }
             // 清空本项目临时存放的自定义CJLint配置文件
-            FileUtils.deleteDirectory(new File(cacheCJLintConfigPathStr));
+            if (StringUtils.isNotEmpty(cacheCJLintConfigPathStr)) {
+                FileUtils.deleteDirectory(new File(cacheCJLintConfigPathStr));
+            }
             // 根据code-linter.json5中的files和ignore配置，筛选检查结果resultList
             filterResultListByCodeLinterJson5();
             if (returnEmptyResult) {

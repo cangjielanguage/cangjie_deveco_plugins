@@ -140,7 +140,7 @@ public class UnzipUtil {
         if (entry.isUnixSymlink()) {
             try (ByteArrayOutputStream targetByteStream = new ByteArrayOutputStream()) {
                 readZipEntry(zipFile, entry, targetByteStream, zipVerifier);
-                createSymbolicLink(entryFile, targetByteStream);
+                createSymbolicLink(entryFile, targetByteStream, target.getCanonicalPath());
             }
         } else if (entry.isDirectory()) {
             createDirs(entryFile);
@@ -207,9 +207,21 @@ public class UnzipUtil {
         }
     }
 
-    private static void createSymbolicLink(File entryFile, ByteArrayOutputStream targetByteStream) throws IOException {
+    private static void createSymbolicLink(File entryFile, ByteArrayOutputStream targetByteStream,
+        String targetDirectory) throws IOException {
         Path linkPath = entryFile.toPath();
-        Path linkTarget = new File(targetByteStream.toString(StandardCharsets.UTF_8)).toPath();
+        String targetPathStr = targetByteStream.toString(StandardCharsets.UTF_8);
+        Path linkTarget = Paths.get(targetPathStr);
+        if (!linkTarget.isAbsolute()) {
+            Path linkDir = linkPath.getParent();
+            linkTarget = linkDir.resolve(linkTarget).normalize();
+        }
+        Path targetDir = Paths.get(targetDirectory).normalize().toAbsolutePath();
+        Path resolvedTarget = linkTarget.normalize().toAbsolutePath();
+        if (!resolvedTarget.startsWith(targetDir)) {
+            throw new IOException(
+                String.format("Symlink target '%s' points outside extraction directory", targetPathStr));
+        }
         createParentDirectory(entryFile);
         Files.createSymbolicLink(linkPath, linkTarget);
     }
