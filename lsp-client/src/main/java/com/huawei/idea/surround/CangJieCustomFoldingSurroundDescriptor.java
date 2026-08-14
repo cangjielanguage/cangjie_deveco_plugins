@@ -133,7 +133,7 @@ public class CangJieCustomFoldingSurroundDescriptor implements SurroundDescripto
     }
 
     private static PsiElement @NotNull [] adjustRange(@NotNull PsiElement start, @NotNull PsiElement end,
-            int firstLineStart, int lastLineEnd) {
+        int firstLineStart, int lastLineEnd) {
         PsiElement lowerStart = lowerStartElementIfNeeded(start, end);
         PsiElement lowerEnd = lowerEndElementIfNeeded(start, end);
         if (lowerStart == null || lowerEnd == null) {
@@ -149,10 +149,10 @@ public class CangJieCustomFoldingSurroundDescriptor implements SurroundDescripto
         PsiElement newStartParent = getParent(lowerStart);
         PsiElement newEndParent = getParent(lowerEnd);
         boolean canExpandTogether = newStartParent != null
-                && newStartParent == newEndParent
-                && newStartParent.getFirstChild() == lowerStart
-                && newEndParent.getLastChild().getPrevSibling() == lowerEnd
-                && newEndParent.getLastChild() instanceof CjEnd;
+            && newStartParent == newEndParent
+            && newStartParent.getFirstChild() == lowerStart
+            && newEndParent.getLastChild().getPrevSibling() == lowerEnd
+            && newEndParent.getLastChild() instanceof CjEnd;
         if (canExpandTogether) {
             lowerStart = newStartParent;
             lowerEnd = newEndParent;
@@ -180,14 +180,18 @@ public class CangJieCustomFoldingSurroundDescriptor implements SurroundDescripto
                 }
                 break;
             }
-            current = current.getFirstChild();
+            PsiElement firstChild = current.getFirstChild();
+            if (firstChild == null) {
+                break;
+            }
+            current = firstChild;
         }
         return null;
     }
 
     private static PsiElement @NotNull [] checkResultRange(@NotNull PsiElement resultStart,
                                                            @NotNull PsiElement resultEnd,
-            int firstLineStart, int lastLineEnd) {
+        int firstLineStart, int lastLineEnd) {
         PsiElement ifExpression = findIfExpression(resultStart.getFirstChild());
         if (ifExpression != null) {
             return new PsiElement[] {resultStart, resultEnd};
