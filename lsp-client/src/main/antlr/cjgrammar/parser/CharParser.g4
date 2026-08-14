@@ -607,23 +607,56 @@ parenthesizedType
 
 //for lsp
 expression
-    :  postfixExpression (INC | DEC)?  // 支持 a++++ 而且左结合
-    | prefixUnaryOperator expression // 右结合
-    | expression ( NL* exponentOperator NL* expression )+ // 右结合
-    | expression NL* (AS | IS) NL* type // 可以写 a as b as c ; a is b is c 而且是左结合
-    | expression NL* ( multiplicativeOperator
-    | additiveOperator
-    | shiftingOperator
-    | comparisonOperator  // 可以写 a > b > c 而且是左结合
-    | equalityOperator  // 可以写 a == b == c 而且是左结合
-    | conditionOperator
-    | flowOperator
-    | assignmentOperator ) NL* expression // 左结合
-    | expression NL* (CLOSEDRANGEOP | RANGEOP) NL* expression (NL* COLON NL* expression)? //可以写 1..2..3 而且是右结合
-    | expression (NL* QUEST QUEST NL* expression)+ // 右结合
-    | leftValueExpression NL* assignmentOperator NL* expression // 可以写 a = b = c 而且是右结合
+    : leftValueExpression NL* assignmentOperator NL* expression // 可以写 a = b = c 而且是右结合
     | tupleLeftValueExpression NL* ASSIGN NL* expression
     | LET NL* deconstructPattern NL* LT SUB NL* expression
+    | operatorOperand expressionSuffix*
+    ;
+
+expressionSuffix
+    : NL* (AS | IS) NL* type
+    | NL* shiftingOperator NL* operatorOperand
+    | NL* comparisonOperator NL* operatorOperand
+    | NL* equalityOperator NL* operatorOperand
+    | NL* conditionOperator NL* operatorOperand
+    | NL* (CLOSEDRANGEOP | RANGEOP) NL* operatorOperand (NL* COLON NL* operatorOperand)?
+    | NL* QUEST QUEST NL* operatorOperand
+    | NL* flowOperator NL* operatorOperand
+    | NL* assignmentOperator NL* expression
+    ;
+
+operatorOperand
+    : additiveExpression
+    | multiplicativeExpression
+    | exponentExpression
+    | unaryPostfixExpression
+    ;
+
+additiveExpression
+    : multiplicativeOperand (NL* additiveOperator NL* multiplicativeOperand)*
+    ;
+
+multiplicativeOperand
+    : multiplicativeExpression
+    | exponentExpression
+    | unaryPostfixExpression
+    ;
+
+multiplicativeExpression
+    : exponentOperand (NL* multiplicativeOperator NL* exponentOperand)+
+    ;
+
+exponentOperand
+    : exponentExpression
+    | unaryPostfixExpression
+    ;
+
+exponentExpression
+    : unaryPostfixExpression (NL* exponentOperator NL* unaryPostfixExpression)+
+    ;
+
+unaryPostfixExpression
+    : prefixUnaryOperator* postfixExpression (INC | DEC)?
     ;
 
 lamdaDefinition
@@ -670,11 +703,11 @@ postfixExpression
     | ADJOINTOF (LPAREN NL* diffFunc NL* RPAREN)?
     | (identifier QUEST? NL* DOT NL*)* identifier NL* (LT NL* type NL*)+ rShift+ NL* GT*
     | atomicExpression lambdaExpression?
-    | postfixExpression QUEST? NL* DOT NL* identifier callSuffix? lambdaExpression
-    | postfixExpression QUEST? NL* DOT NL* identifier typeArguments
+    | postfixExpression QUEST? NL* DOT NL* identifier (typeArguments | (callSuffix? lambdaExpression))
     | postfixExpression QUEST? NL* DOT NL* identifier?
     | postfixExpression NOT
-    | postfixExpression callSuffix lambdaExpression? (QUEST? NL* DOT NL* lamdaParam)*
+    | postfixExpression callSuffix lambdaExpression?
+    | postfixExpression callSuffix lambdaExpression? (QUEST? NL* DOT NL* lamdaParam)+
     | postfixExpression indexAccess
     | postfixExpression (QUEST questSeperatedItems)+ // optional chaining expression
     ;
@@ -907,10 +940,23 @@ typePattern
    ;
 
 enumPattern
-   : NL* (userType QUEST? NL* DOT NL*) identifier  callSuffix
-   | NL* (userType QUEST? NL* DOT NL*) identifier
-   | NL* identifier  callSuffix
+   : NL* enumPatternConstructor patternCallSuffix
+   | NL* enumPatternConstructor callSuffix
+   | NL* enumPatternConstructor
    ;
+
+enumPatternConstructor
+    : enumPatternQualifier ? identifier
+    ;
+
+enumPatternQualifier
+    : identifier (typeArguments)? QUEST? NL* DOT NL*
+      (identifier (typeArguments)? QUEST? NL* DOT NL*)*
+    ;
+
+patternCallSuffix
+    : LPAREN NL* (pattern (NL* COMMA NL* pattern)* NL*)? RPAREN
+    ;
 
 loopExpression
     : forInExpression
@@ -1053,10 +1099,10 @@ modifier
     | OVERRIDE
     | ABSTRACT
     | REDEF
-	| SEALED
-	| CONST
-	| MUT
-	| UNSAFE
+    | SEALED
+    | CONST
+    | MUT
+    | UNSAFE
     ;
 
 keywords
@@ -1075,11 +1121,11 @@ quoteToken
     | AND_ASSIGN | OR_ASSIGN | BITXOR_ASSIGN | BITAND_ASSIGN | BITOR_ASSIGN | LSHIFT_ASSIGN
     | ARROW | DOUBLE_ARROW | ELLIPSIS | CLOSEDRANGEOP | RANGEOP | HASH | AT | QUEST | UPPERBOUND | LT | GT | LE | ge
     | NOTEQUAL | EQUAL | WILDCARD | BACKSLASH | QUOTESYMBOL | DOLLAR
-    | INT8 | INT16 | INT32 | INT64 | UINT8 | UINT16 | UINT32 | UINT64 | FLOAT16
+    | INT8 | INT16 | INT32 | INT64 | UINT8 | UINT16 | UINT32 | UINT64 | FLOAT16 | INTNATIVE | UINTNATIVE
     | FLOAT32 | FLOAT64 | RUNE | BOOLEAN | UNIT | NOTHING | STRUCT | ENUM | THIS
     | PACKAGE | IMPORT | CLASS | INTERFACE | FUNC | LET | VAR | CONST | TYPE_ALIAS
     | INIT | THIS | SUPER | IF | ELSE | CASE | TRY | CATCH | FINALLY
-    | FOR | DO | WHILE | THROW | RETURN | CONTINUE | BREAK | AS | IN
+    | FOR | DO | WHILE | THROW | RETURN | CONTINUE | BREAK | AS | IN | IS
     | MATCH  | WHERE | EXTEND | SPAWN | SYNCHRONIZED | MACRO | QUOTE | TRUE | FALSE
     | SEALED | STATIC | PUBLIC | PRIVATE | PROTECTED | PUBLIC
     | OVERRIDE | ABSTRACT | OPEN | OPERATOR | FOREIGN
