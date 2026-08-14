@@ -30,13 +30,13 @@ import com.huawei.deveco.build.ohos.service.HvigorParamsBuilder;
 import com.huawei.deveco.build.ohos.service.HvigorService;
 import com.huawei.deveco.projectmodel.ohos.model.ModuleModel;
 import com.huawei.deveco.projectmodel.ohos.model.ProjectModel;
+import com.huawei.deveco.projectmodel.ohos.model.ProjectModelManager;
 import com.huawei.deveco.projectmodel.ohos.model.impl.OhosModuleModel;
 import com.huawei.deveco.projectmodel.ohos.sync.SyncRequest;
 import com.huawei.deveco.projectmodel.ohos.sync.syncinterface.PreSync;
 import com.huawei.deveco.projectmodel.ohos.util.PsiJsonFileUtil;
 import com.huawei.deveco.res.ohos.json.profile.schema.BuildProfileSchemaProviderFactory;
 
-import com.intellij.execution.process.ProcessAdapter;
 import com.intellij.execution.process.ProcessEvent;
 import com.intellij.execution.process.ProcessListener;
 import com.intellij.json.psi.JsonArray;
@@ -190,8 +190,12 @@ public class CangjieProjectSyncImpl implements PreSync {
         }
         builder.withTaskName("SyncCangjieResource");
 
-        boolean shouldColdStart = HvigorConfigChecker.hasNeedDownloadPack(projectModel);
-        ProcessListener listener = new ProcessAdapter() {
+        boolean shouldColdStart = false;
+        ProjectModel tempProjectModel = ProjectModelManager.getInstance().getTargetProjectModel(project);
+        if (tempProjectModel != null) {
+            shouldColdStart = HvigorConfigChecker.hasNeedDownloadPack(tempProjectModel);
+        }
+        ProcessListener listener = new ProcessListener() {
             @Override
             public void processTerminated(@NotNull ProcessEvent event) {
                 COMPILE_BUILD_LISTENER.buildEnd(project, event.getExitCode() == 0);

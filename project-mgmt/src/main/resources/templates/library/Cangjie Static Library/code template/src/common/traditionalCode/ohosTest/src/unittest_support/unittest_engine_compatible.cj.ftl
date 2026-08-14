@@ -32,6 +32,7 @@ import ohos.ability.Want
 import std.unittest.common.Configuration
 import kit.PerformanceAnalysisKit.Hilog
 import std.env.setVariable
+import ohos.ui_test.UITest
 
 @When[coverage == "true"]
 foreign func __gcov_dump(): Unit
@@ -206,6 +207,7 @@ public class OpenHarmonyTestRunner <: TestRunner {
         Hilog.info(0, "Cangjie-Test", "abilityDelegatorArguments.parameters = <#noparse>${abilityDelegatorArguments.parameters}</#noparse>")
         Hilog.info(0, "Cangjie-Test", "Started running tests.")
         abilityDelegator.print("OpenHarmonyTestRunner onRun")
+        UITest.setup()
         let parameters = abilityDelegatorArguments.parameters
         let bundleName = abilityDelegatorArguments.bundleName
         let bundleInfo = BundleManager.getBundleInfoForSelf(

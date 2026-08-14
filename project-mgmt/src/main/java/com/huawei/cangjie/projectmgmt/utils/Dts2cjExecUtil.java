@@ -22,9 +22,9 @@ import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.impl.ConsoleViewImpl;
 import com.intellij.execution.process.NopProcessHandler;
-import com.intellij.execution.process.ProcessAdapter;
 import com.intellij.execution.process.ProcessEvent;
 import com.intellij.execution.process.ProcessHandler;
+import com.intellij.execution.process.ProcessListener;
 import com.intellij.execution.process.ProcessTerminatedListener;
 import com.intellij.execution.ui.ConsoleViewContentType;
 import com.intellij.lang.LangBundle;
@@ -82,10 +82,10 @@ public class Dts2cjExecUtil {
         }
         ProcessTerminatedListener.attach(processHandler);
         AtomicBoolean isDts2cjNormalExit = new AtomicBoolean(false);
-        processHandler.addProcessListener(new ProcessAdapter() {
+        processHandler.addProcessListener(new ProcessListener() {
             @Override
             public void processTerminated(@NotNull ProcessEvent event) {
-                super.processTerminated(event);
+                ProcessListener.super.processTerminated(event);
                 isDts2cjNormalExit.set(event.getExitCode() == 0);
             }
         });
@@ -140,7 +140,7 @@ public class Dts2cjExecUtil {
 
     private ProcessHandler runWithConsoleAddProcess(ProcessHandler processHandler, Dts2cjViewManager syncViewManager,
         ExternalSystemTaskId id, DefaultBuildDescriptor buildDescriptor) {
-        processHandler.addProcessListener(new ProcessAdapter() {
+        processHandler.addProcessListener(new ProcessListener() {
             @Override
             public void startNotified(@NotNull ProcessEvent event) {
                 syncViewManager.onEvent(id,

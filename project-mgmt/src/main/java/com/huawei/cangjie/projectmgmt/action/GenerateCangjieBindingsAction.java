@@ -71,6 +71,7 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.util.system.CpuArch;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
@@ -211,7 +212,7 @@ public class GenerateCangjieBindingsAction extends AnAction {
     private GeneralCommandLine getGeneralCommandLine(Path a2cjToolOption, ProjectModel projectModel,
         List<String> a2cjCommands, Path sdkPath) {
         GeneralCommandLine generalCommandLine =
-            new GeneralCommandLine().withExePath(compatiblePathSpaces(a2cjToolOption.toString()))
+            new GeneralCommandLine().withExePath(a2cjToolOption.toString())
                 .withWorkDirectory(Paths.get(projectModel.getProjectPath()).toFile()).withParameters(a2cjCommands)
                 .withEnvironment(CangjieEnvUtils.getProjectEnvs(projectModel.getProject()))
                 .withRedirectErrorStream(true);
@@ -231,6 +232,9 @@ public class GenerateCangjieBindingsAction extends AnAction {
     }
 
     private void deleteTempFiles(String destPath) {
+        if (StringUtils.isEmpty(destPath)) {
+            return;
+        }
         Path destDirPath = Paths.get(destPath);
         if (!Files.exists(destDirPath)) {
             return;
@@ -400,7 +404,7 @@ public class GenerateCangjieBindingsAction extends AnAction {
         if (SystemInfo.isWindows) {
             return "windows_x86_64_cjnative";
         } else {
-            if (SystemInfo.isAarch64) {
+            if (CpuArch.isArm64()) {
                 return "darwin_aarch64_cjnative";
             } else {
                 return "darwin_x86_64_cjnative";

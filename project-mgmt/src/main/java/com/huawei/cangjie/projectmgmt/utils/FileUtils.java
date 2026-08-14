@@ -955,15 +955,8 @@ public class FileUtils {
         String cangjieSrcRootPath;
         try {
             String cjpmDirPath = getRealCjpmTomlDir(moduleModel, pathType);
-            Path resolvedPath = Path.of(cjpmDirPath, srcDir).normalize();
-            Path basePath = Path.of(cjpmDirPath).normalize();
-            if (!resolvedPath.startsWith(basePath)) {
-                LOG.warn("src-dir path traversal detected, fallback to default path.");
-                cangjieSrcRootPath = Path.of(moduleModel.getModulePath(), "src", "main", "cangjie")
-                    .normalize().toString().replaceAll("\\\\", "/");
-            } else {
-                cangjieSrcRootPath = resolvedPath.toString().replaceAll("\\\\", "/");
-            }
+            cangjieSrcRootPath = Path.of(cjpmDirPath, srcDir)
+                .normalize().toString().replaceAll("\\\\", "/")
         } catch (InvalidPathException e) {
             LOG.warn("Invalid custom combination src-dir file path.");
             cangjieSrcRootPath = Path.of(moduleModel.getModulePath(), "src", "main", "cangjie")
@@ -1067,8 +1060,8 @@ public class FileUtils {
             return;
         }
         try {
-            String command = "xattr -dr com.apple.quarantine " + path;
-            Process process = Runtime.getRuntime().exec(command);
+            ProcessBuilder pb = new ProcessBuilder("xattr", "-dr", "com.apple.quarantine", path.toString());
+            Process process = pb.start();
             StreamConsumer errConsumer = new StreamConsumer(process.getErrorStream(), "dealErrorStream");
             StreamConsumer outputConsumer = new StreamConsumer(process.getInputStream(), "dealInputStream");
             errConsumer.start();
