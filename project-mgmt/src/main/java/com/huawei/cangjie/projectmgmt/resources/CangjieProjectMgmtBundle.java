@@ -53,6 +53,6 @@ public class CangjieProjectMgmtBundle extends DynamicBundle {
      */
     public static String message(@NotNull @PropertyKey(resourceBundle = BUNDLE_NAME) String key,
         @NotNull String... params) {
-        return getSingletonInstance().getMessage(key, params);
+        return getSingletonInstance().getMessage(key, (Object) params);
     }
 }

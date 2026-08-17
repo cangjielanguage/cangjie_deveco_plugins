@@ -1,13 +1,18 @@
-plugins {
-    id 'org.jetbrains.intellij.platform.module'
-}
+def devEcoJars = rootProject.devEcoJars(project, [
+        'plugins/openharmony/lib/ohos-project-model-*.jar',
+        'plugins/openharmony/lib/ohos-resource-*.jar',
+        'plugins/openharmony/lib/sdk-core-*.jar'
+])
 
 dependencies {
-    implementation(project(path: ":quality-common"))
-}
-
-sourceSets {
-    main {
-        java.srcDirs = ['src/main/java']
+    compileOnly project(':tools-extension:quality-common')
+    compileOnly project(':project-mgmt')
+    compileOnly project(':lsp-client')
+    compileOnly devEcoJars
+    testCompileOnly devEcoJars
+    compileOnly 'org.projectlombok:lombok:1.18.38'
+    annotationProcessor 'org.projectlombok:lombok:1.18.38'
+    intellijPlatform {
+        bundledPlugin('org.jetbrains.plugins.terminal')
     }
 }

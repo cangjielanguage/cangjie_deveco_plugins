@@ -1,0 +1,13 @@
+def devEcoJars = rootProject.devEcoJars(project, [
+        'plugins/hvigor-support/lib/*hvigor-support-*.jar',
+        'plugins/openharmony/lib/lsp4intellij-*.jar',
+        'plugins/openharmony/lib/ohos-project-model-*.jar',
+        'plugins/openharmony/lib/sdk-core-*.jar',
+        'plugins/openharmony/lib/sdk-oh-core-*.jar',
+        'plugins/openharmony/lib/sdk-oh-idea-*.jar'
+])
+
+dependencies {
+    compileOnly devEcoJars
+    testCompileOnly devEcoJars
+}

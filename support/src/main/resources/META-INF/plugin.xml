@@ -34,6 +34,7 @@
     <xi:include href="/META-INF/project-mgmt.xml" xpointer="xpointer(/idea-plugin/*)" />
     <xi:include href="/META-INF/cangjie-sdk-manager.xml" xpointer="xpointer(/idea-plugin/*)" />
     <xi:include href="/META-INF/cjformat.xml" xpointer="xpointer(/idea-plugin/*)" />
+    <xi:include href="/META-INF/cjlint.xml" xpointer="xpointer(/idea-plugin/*)" />
     <xi:include href="/META-INF/Cangjie-dap-plugin.xml" xpointer="xpointer(/idea-plugin/*)" />
     <xi:include href="/META-INF/cj-profiler-foundation.xml" xpointer="xpointer(/idea-plugin/*)"/>
     <xi:include href="/META-INF/cangjie-test-framework.xml" xpointer="xpointer(/idea-plugin/*)"/>

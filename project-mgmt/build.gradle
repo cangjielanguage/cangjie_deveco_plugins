@@ -1,0 +1,52 @@
+plugins {
+    id 'antlr'
+}
+
+def devEcoJars = rootProject.devEcoJars(project, [
+        'lib/hwlib.jar',
+        'plugins/harmony/lib/cangjie-mgmt-plugin-*.jar',
+        'plugins/hvigor-support/lib/*hvigor-support-*.jar',
+        'plugins/openharmony/lib/build-system-*.jar',
+        'plugins/openharmony/lib/hos-hvigor-model-*.jar',
+        'plugins/openharmony/lib/ohos-debugger-*.jar',
+        'plugins/openharmony/lib/ohos-hdclib-*.jar',
+        'plugins/openharmony/lib/ohos-project-model-*.jar',
+        'plugins/openharmony/lib/ohos-resource-*.jar',
+        'plugins/openharmony/lib/project-mgmt-*.jar',
+        'plugins/openharmony/lib/sdk-core-*.jar',
+        'plugins/openharmony/lib/sdk-hos-core-*.jar',
+        'plugins/openharmony/lib/sdk-hos-idea-*.jar'
+])
+
+configurations {
+    antlrTool {
+        canBeConsumed = false
+        canBeResolved = true
+    }
+    runtimeClasspath {
+        exclude group: 'antlr', module: 'antlr'
+    }
+}
+
+dependencies {
+    compileOnly project(':sdk-mgmt')
+    compileOnly devEcoJars
+    testCompileOnly devEcoJars
+    compileOnly 'org.apache.logging.log4j:log4j-api:2.24.3'
+    compileOnly 'com.alibaba.fastjson2:fastjson2:2.0.57'
+    antlrTool("org.antlr:antlr4:${providers.gradleProperty('antlr4Version').get()}") {
+        exclude group: 'com.ibm.icu', module: 'icu4j'
+    }
+    implementation("org.antlr:antlr4:${providers.gradleProperty('antlr4Version').get()}") {
+        exclude group: 'antlr', module: 'antlr'
+        exclude group: 'com.ibm.icu', module: 'icu4j'
+    }
+}
+
+generateGrammarSource {
+    antlrClasspath = configurations.antlrTool
+    arguments += ['-visitor', '-package', 'toml.parser']
+    outputDirectory = file("$buildDir/generated-src/antlr/main/toml/parser")
+}
+
+sourceSets.main.java.srcDir(generateGrammarSource.outputDirectory)

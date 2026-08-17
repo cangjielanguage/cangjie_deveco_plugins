@@ -1,0 +1,20 @@
+// Aggregate plugin descriptor module.
+configurations.runtimeClasspath {
+    exclude group: 'antlr', module: 'antlr'
+}
+
+dependencies {
+    runtimeOnly project(':lsp-client')
+    runtimeOnly project(':project-mgmt')
+    runtimeOnly project(':sdk-mgmt')
+    runtimeOnly project(':dap-client')
+    runtimeOnly project(':profiler')
+    runtimeOnly project(':tools-extension:quality-common')
+    runtimeOnly project(':tools-extension:cjformat')
+    runtimeOnly project(':tools-extension:cjlint')
+    runtimeOnly project(':tools-extension:cangjie-test-framework')
+}
+
+tasks.named('build') {
+    dependsOn tasks.named('buildPlugin')
+}

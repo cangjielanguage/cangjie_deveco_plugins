@@ -1,0 +1,74 @@
+plugins {
+    id 'antlr'
+}
+
+version = providers.gradleProperty('LSP_deveco_version').orElse(rootProject.version.toString()).get()
+
+def devEcoJars = rootProject.devEcoJars(project, [
+        'lib/hwlib.jar',
+        'plugins/harmony/lib/cangjie-mgmt-plugin-*.jar',
+        'plugins/hvigor-support/lib/*hvigor-support-*.jar',
+        'plugins/openharmony/lib/ace-common-*.jar',
+        'plugins/openharmony/lib/ace-lsp-*.jar',
+        'plugins/openharmony/lib/build-system-*.jar',
+        'plugins/openharmony/lib/javascript-*.jar',
+        'plugins/openharmony/lib/lsp4intellij-*.jar',
+        'plugins/openharmony/lib/ohos-ark-ui-client-*.jar',
+        'plugins/openharmony/lib/ohos-project-model-*.jar',
+        'plugins/openharmony/lib/ohos-resource-*.jar',
+        'plugins/openharmony/lib/project-mgmt-*.jar',
+        'plugins/openharmony/lib/resource-common-*.jar',
+        'plugins/openharmony/lib/sdk-core-*.jar',
+        'plugins/openharmony/lib/sdk-hos-idea-*.jar',
+        'plugins/openharmony/lib/sdk-idea-*.jar',
+        'plugins/openharmony/lib/sdk-oh-idea-*.jar'
+])
+
+configurations {
+    antlrTool {
+        canBeConsumed = false
+        canBeResolved = true
+    }
+    runtimeClasspath {
+        exclude group: 'antlr', module: 'antlr'
+    }
+}
+
+dependencies {
+    compileOnly project(':project-mgmt')
+    compileOnly project(':sdk-mgmt')
+    compileOnly devEcoJars
+    testCompileOnly devEcoJars
+    compileOnly 'org.eclipse.xtext:org.eclipse.xtext.xbase.lib:2.35.0'
+    compileOnly 'org.eclipse.lsp4j:org.eclipse.lsp4j:0.24.0'
+    compileOnly 'com.alibaba.fastjson2:fastjson2:2.0.57'
+    testImplementation 'org.eclipse.lsp4j:org.eclipse.lsp4j:0.24.0'
+    testImplementation 'junit:junit:4.13.2'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.11.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
+    antlrTool("org.antlr:antlr4:${providers.gradleProperty('antlr4Version').get()}") {
+        exclude group: 'com.ibm.icu', module: 'icu4j'
+    }
+    implementation("org.antlr:antlr4:${providers.gradleProperty('antlr4Version').get()}") {
+        exclude group: 'antlr', module: 'antlr'
+        exclude group: 'com.ibm.icu', module: 'icu4j'
+    }
+    intellijPlatform {
+        bundledPlugin('com.intellij.copyright')
+        bundledModule('intellij.platform.lvcs.impl')
+    }
+}
+sourceSets {
+    main {
+        java.srcDirs = ['src/main/java', 'src/main/lsp', "$buildDir/generated-src/antlr/main"]
+    }
+}
+
+generateGrammarSource {
+    antlrClasspath = configurations.antlrTool
+    arguments += ['-package', 'cjgrammar.parser', '-Xexact-output-dir']
+}
+
+tasks.named('test') {
+    failOnNoDiscoveredTests = false
+}

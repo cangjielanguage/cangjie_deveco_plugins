@@ -1,0 +1,27 @@
+def devEcoJars = rootProject.devEcoJars(project, [
+        'lib/hwlib.jar',
+        'plugins/openharmony/lib/ace-debugger-*.jar',
+        'plugins/openharmony/lib/dap_4_intellij-*.jar',
+        'plugins/openharmony/lib/dap4intellij-*.jar',
+        'plugins/openharmony/lib/dap4j-*.jar',
+        'plugins/openharmony/lib/ohos-debug-common-*.jar',
+        'plugins/openharmony/lib/ohos-debugger-*.jar',
+        'plugins/openharmony/lib/ohos-hdclib-*.jar',
+        'plugins/openharmony/lib/ohos-project-model-*.jar',
+        'plugins/openharmony/lib/panda-debug-adapter-*.jar',
+        'plugins/openharmony/lib/sdk-core-*.jar',
+        'plugins/openharmony/lib/sdk-hos-core-*.jar',
+        'plugins/openharmony/lib/sdk-hos-idea-*.jar',
+        'plugins/openharmony/lib/sdk-oh-core-*.jar',
+        'plugins/openharmony/lib/sdk-oh-idea-*.jar',
+        'plugins/openharmony/lib/source-map-*.jar'
+])
+
+dependencies {
+    compileOnly project(':sdk-mgmt')
+    compileOnly devEcoJars
+    testCompileOnly devEcoJars
+    compileOnly 'org.eclipse.xtext:org.eclipse.xtext.xbase.lib:2.35.0'
+    compileOnly 'org.projectlombok:lombok:1.18.38'
+    annotationProcessor 'org.projectlombok:lombok:1.18.38'
+}
