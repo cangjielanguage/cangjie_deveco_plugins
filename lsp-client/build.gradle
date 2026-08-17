@@ -2,8 +2,6 @@ plugins {
     id 'antlr'
 }
 
-version = providers.gradleProperty('LSP_deveco_version').orElse(rootProject.version.toString()).get()
-
 def devEcoJars = rootProject.devEcoJars(project, [
         'lib/hwlib.jar',
         'plugins/harmony/lib/cangjie-mgmt-plugin-*.jar',
