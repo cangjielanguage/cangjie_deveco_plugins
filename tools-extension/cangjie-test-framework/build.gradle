@@ -1,9 +1,27 @@
-plugins {
-    id 'org.jetbrains.intellij.platform.module'
-}
+def devEcoJars = rootProject.devEcoJars(project, [
+        'plugins/openharmony/lib/build-system-*.jar',
+        'plugins/openharmony/lib/hos-hvigor-model-*.jar',
+        'plugins/openharmony/lib/ohos-debug-common-*.jar',
+        'plugins/openharmony/lib/ohos-debugger-*.jar',
+        'plugins/openharmony/lib/ohos-hdclib-*.jar',
+        'plugins/openharmony/lib/ohos-project-model-*.jar',
+        'plugins/openharmony/lib/ohos-resource-*.jar',
+        'plugins/openharmony/lib/ohos-test-framework-*.jar',
+        'plugins/openharmony/lib/project-mgmt-*.jar',
+        'plugins/openharmony/lib/sdk-core-*.jar'
+])
 
-sourceSets {
-    main {
-        java.srcDirs = ['src/main/java']
+dependencies {
+    compileOnly project(':project-mgmt')
+    compileOnly project(':sdk-mgmt')
+    compileOnly project(':dap-client')
+    compileOnly project(':lsp-client')
+    compileOnly devEcoJars
+    testCompileOnly devEcoJars
+    compileOnly 'com.alibaba.fastjson2:fastjson2:2.0.57'
+    compileOnly 'org.projectlombok:lombok:1.18.38'
+    annotationProcessor 'org.projectlombok:lombok:1.18.38'
+    intellijPlatform {
+        bundledPlugin('org.jetbrains.plugins.terminal')
     }
 }

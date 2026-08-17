@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) Huawei Technologies Co., Ltd. 2026-2026. All rights reserved.
  * This source file is part of the Cangjie project, licensed under Apache-2.0
  * with Runtime Library Exception.
@@ -42,17 +42,5 @@ public class CjformatBundle extends DynamicBundle {
             instance = new CjformatBundle();
         }
         return instance;
-    }
-
-    /**
-     * get bundle message
-     *
-     * @param key key of message
-     * @param params params
-     * @return value of message
-     */
-    public static String message(@NotNull @PropertyKey(resourceBundle = BUNDLE_NAME) String key,
-        @NotNull String... params) {
-        return getSingletonInstance().getMessage(key, params);
     }
 }

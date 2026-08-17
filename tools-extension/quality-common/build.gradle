@@ -1,9 +1,26 @@
-plugins {
-    id 'org.jetbrains.intellij.platform.module'
-}
+def devEcoJars = rootProject.devEcoJars(project, [
+        'lib/hwlib.jar',
+        'plugins/hvigor-support/lib/*hvigor-support-*.jar',
+        'plugins/openharmony/lib/ohos-project-model-*.jar',
+        'plugins/openharmony/lib/ohos-resource-*.jar',
+        'plugins/openharmony/lib/sdk-core-*.jar',
+        'plugins/openharmony/lib/sdk-hos-core-*.jar',
+        'plugins/openharmony/lib/sdk-hos-idea-*.jar',
+        'plugins/openharmony/lib/sdk-oh-core-*.jar',
+        'plugins/openharmony/lib/sdk-oh-idea-*.jar'
+])
 
-sourceSets {
-    main {
-        java.srcDirs = ['src/main/java']
+dependencies {
+    compileOnly project(':project-mgmt')
+    compileOnly project(':sdk-mgmt')
+    compileOnly devEcoJars
+    testCompileOnly devEcoJars
+    compileOnly 'org.projectlombok:lombok:1.18.38'
+    annotationProcessor 'org.projectlombok:lombok:1.18.38'
+    testImplementation 'junit:junit:4.13.2'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.11.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
+    intellijPlatform {
+        bundledPlugin('org.jetbrains.plugins.terminal')
     }
 }

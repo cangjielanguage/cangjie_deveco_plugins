@@ -1,0 +1,29 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
+pluginManagement {
+    repositories {
+        maven { url = uri('https://maven.aliyun.com/repository/gradle-plugin/') }
+        gradlePluginPortal()
+        mavenCentral()
+        maven { url = uri('https://repo.huaweicloud.com/repository/maven/') }
+    }
+}
+
+// Do not let machine-wide Gradle proxy settings redirect repository requests
+// to a Maven mirror host. This project declares its mirrors explicitly above.
+System.clearProperty('http.proxyHost')
+System.clearProperty('http.proxyPort')
+System.clearProperty('https.proxyHost')
+System.clearProperty('https.proxyPort')
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
+    repositories {
+        maven { url = uri('https://repo.huaweicloud.com/repository/maven/') }
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'cangjie-deveco-plugins'
+include(':support', ':lsp-client', ':project-mgmt', ':sdk-mgmt', ':dap-client', ':profiler')
+include(':tools-extension:quality-common', ':tools-extension:cjlint', ':tools-extension:cjformat', ':tools-extension:cangjie-test-framework')

@@ -956,7 +956,7 @@ public class FileUtils {
         try {
             String cjpmDirPath = getRealCjpmTomlDir(moduleModel, pathType);
             cangjieSrcRootPath = Path.of(cjpmDirPath, srcDir)
-                .normalize().toString().replaceAll("\\\\", "/")
+                .normalize().toString().replaceAll("\\\\", "/");
         } catch (InvalidPathException e) {
             LOG.warn("Invalid custom combination src-dir file path.");
             cangjieSrcRootPath = Path.of(moduleModel.getModulePath(), "src", "main", "cangjie")

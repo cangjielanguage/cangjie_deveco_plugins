@@ -1,0 +1,188 @@
+import groovy.json.JsonSlurper
+
+plugins {
+    id 'base'
+    id 'org.jetbrains.intellij.platform' version '2.16.0' apply false
+}
+
+def targetIdeaVersion = providers.gradleProperty('ideaVersion').orElse('2026.1.1').get()
+
+def npmCommand = providers.systemProperty('os.name').get().toLowerCase().contains('windows') ? 'npm.cmd' : 'npm'
+
+def buildSupportDir = layout.projectDirectory.dir('build-support')
+def ohosNpmRegistry = providers.gradleProperty('ohosNpmRegistry')
+        .orElse('https://repo.harmonyos.com/npm/')
+
+tasks.register('npmInstallBuildSupport', Exec) {
+    group = 'build support'
+    description = 'Installs the build-support TypeScript dependencies.'
+    workingDir buildSupportDir
+    commandLine npmCommand, 'ci', '--prefer-offline', '--no-audit', '--no-fund',
+            '--registry', 'https://registry.npmjs.org/',
+            "--@ohos:registry=${ohosNpmRegistry.get()}"
+    inputs.files(buildSupportDir.file('package.json'), buildSupportDir.file('package-lock.json'),
+            buildSupportDir.file('tsconfig.json'))
+    outputs.dir(buildSupportDir.dir('node_modules'))
+}
+
+tasks.register('compileBuildSupport', Exec) {
+    group = 'build'
+    description = 'Compiles the build-support TypeScript project.'
+    dependsOn 'npmInstallBuildSupport'
+    workingDir buildSupportDir
+    commandLine npmCommand, 'run', 'build'
+    inputs.files(fileTree(buildSupportDir) {
+        include 'index.ts', 'src/**/*.ts', 'package.json', 'tsconfig.json'
+        exclude '**/*.js', 'node_modules/**'
+    })
+    outputs.files(
+            buildSupportDir.file('index.js'),
+            buildSupportDir.file('index.d.ts'),
+            fileTree(buildSupportDir.dir('src')) { include '**/*.js', '**/*.d.ts', '**/*.js.map' }
+    )
+}
+
+tasks.register('testBuildSupport', Exec) {
+    group = 'verification'
+    description = 'Runs the build-support npm test suite.'
+    dependsOn 'npmInstallBuildSupport'
+    workingDir buildSupportDir
+    commandLine npmCommand, 'test'
+}
+
+tasks.register('packBuildSupport', Exec) {
+    group = 'distribution'
+    description = 'Creates the build-support npm package.'
+    dependsOn 'compileBuildSupport'
+    workingDir buildSupportDir
+    commandLine npmCommand, 'pack'
+}
+
+tasks.named('build') {
+    dependsOn 'compileBuildSupport'
+    dependsOn subprojects.collect { it.tasks.named('build') }
+}
+
+// Build the support repository last so it consumes the completed outputs of
+// the other Java subprojects when the root build is invoked.
+project(':support') {
+    plugins.withId('java') {
+        tasks.named('build') {
+            mustRunAfter rootProject.subprojects
+                    .findAll { it.path != ':support' }
+                    .collect { it.tasks.named('build') }
+        }
+    }
+}
+
+def gradleJavaHome = file(System.getProperty('java.home'))
+def devEcoCandidates = new LinkedHashSet<File>()
+devEcoCandidates.add(gradleJavaHome)
+if (gradleJavaHome.parentFile != null) {
+    devEcoCandidates.add(gradleJavaHome.parentFile)
+}
+['ProgramFiles', 'ProgramW6432', 'LOCALAPPDATA'].each { variable ->
+    def baseDir = System.getenv(variable)
+    if (baseDir) {
+        devEcoCandidates.add(new File(baseDir, 'Huawei/DevEco Studio'))
+    }
+}
+
+def isDevEcoInstallation = { File candidate ->
+    def productInfo = new File(candidate, 'product-info.json')
+    def openHarmonyLib = new File(candidate, 'plugins/openharmony/lib')
+    if (!productInfo.isFile() || !openHarmonyLib.isDirectory()) {
+        return false
+    }
+    try {
+        def product = new JsonSlurper().parse(productInfo)
+        def hasProjectModel = openHarmonyLib.listFiles()?.any {
+            it.isFile() && it.name ==~ /ohos-project-model-.+\.jar/
+        }
+        return product.name == 'DevEco Studio' && hasProjectModel
+    } catch (Exception ignored) {
+        return false
+    }
+}
+
+def resolvedDevEcoDir = devEcoCandidates.find(isDevEcoInstallation)
+if (resolvedDevEcoDir == null) {
+    def checkedPaths = devEcoCandidates.collect { it.absolutePath }.join(', ')
+    throw new GradleException(
+            "DevEco Studio installation was not found. Gradle JVM: ${gradleJavaHome.absolutePath}. " +
+                    "Checked: ${checkedPaths}"
+    )
+}
+
+ext {
+    devEcoDir = resolvedDevEcoDir
+    intellijIdeaVersion = targetIdeaVersion
+}
+
+ext.devEcoJars = { Project target, List<String> patterns ->
+    def resolved = patterns.collect { pattern ->
+        def matches = target.fileTree(rootProject.devEcoDir) { include pattern }.files.sort()
+        if (matches.size() != 1) {
+            throw new GradleException(
+                    "${target.path}: expected exactly one DevEco JAR for '${pattern}', but found " +
+                            "${matches.size()} under ${rootProject.devEcoDir.absolutePath}: " +
+                            matches.collect { it.name }.join(', '))
+        }
+        matches[0]
+    }
+    target.files(resolved)
+}
+
+allprojects {
+    group = 'com.huawei.cangjie'
+    version = providers.gradleProperty('version').orElse('1.0.0-SNAPSHOT').get()
+}
+
+project(':tools-extension') {
+    apply plugin: 'base'
+}
+
+configure(subprojects.findAll { it.path != ':tools-extension' }) {
+    apply plugin: 'java-library'
+    apply plugin: 'org.jetbrains.intellij.platform'
+    repositories {
+        maven { url = uri('https://repo.huaweicloud.com/repository/maven/') }
+        mavenCentral()
+        intellijPlatform { defaultRepositories() }
+    }
+    sourceSets {
+        main { java.srcDirs = ['src/main/java']; resources.srcDirs = ['src/main/resources'] }
+    }
+    dependencies {
+        intellijPlatform {
+            intellijIdea(rootProject.intellijIdeaVersion) {
+                useInstaller = false
+            }
+            bundledPlugin('com.intellij.java')
+            bundledPlugin('com.intellij.modules.json')
+        }
+    }
+    intellijPlatform {
+        buildSearchableOptions = false
+        pluginConfiguration {
+            ideaVersion {
+                sinceBuild = providers.gradleProperty('pluginSinceBuild').orElse('261')
+                untilBuild = providers.gradleProperty('pluginUntilBuild').orElse('261.*')
+            }
+        }
+    }
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'; options.release = 21
+    }
+    tasks.named('jar') {
+        destinationDirectory = layout.buildDirectory.dir('intermediates/jars')
+    }
+    tasks.named('instrumentedJar') {
+        destinationDirectory = layout.buildDirectory.dir('intermediates/jars')
+    }
+    tasks.withType(Test).configureEach {
+        useJUnitPlatform()
+        jvmArgs '--add-opens=java.base/java.lang=ALL-UNNAMED',
+                '--add-opens=java.desktop/javax.swing=ALL-UNNAMED'
+    }
+}
