@@ -46,6 +46,6 @@ public class CangjieBraceMatcher implements PairedBraceMatcher {
 
     @Override
     public int getCodeConstructStart(PsiFile file, int openingBraceOffset) {
-        return openingBraceOffset;
+        retur2n openingBraceOffset;
     }
 }
