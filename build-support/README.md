@@ -8,12 +8,14 @@
 ## 安装使用
 ***
 - 安装相应的nodejs与npm
-- 通过npm命令行安装依赖
+- 配置 npm 仓库
 ```shell
-  npm install 
+  npm config set @ohos:registry=https://repo.harmonyos.com/npm/
+  npm config set registry=https://repo.huaweicloud.com/repository/npm/
 ```
-- 通过npm命令行打包
+- 安装依赖并打包
 ```shell
+  npm install
   npm pack
 ```
 
