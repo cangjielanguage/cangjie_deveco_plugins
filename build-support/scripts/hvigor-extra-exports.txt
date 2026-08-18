@@ -157,3 +157,5 @@ export { WithParamReplacement } from './src/base/util/util-decorator/param-repla
 export { ReplacePlaceHolderUtil } from './src/base/util/param-replace-util.js';
 /** @internal */
 export { CUSTOM_WORKER_REQUEST } from './src/common/const/const.js';
+export type { Project, Module } from './src/base/external/core/hvigor-core-node.js';
+export { hash, hashFile, isWindows, isMac, isLinux, maxPathLength } from '@ohos/hvigor-common';

@@ -25,11 +25,26 @@ function findTarget() {
   return null;
 }
 
+function patchTypesField(dir) {
+  const pkgPath = path.join(dir, 'package.json');
+  if (!fs.existsSync(pkgPath)) return;
+  let pkg = fs.readFileSync(pkgPath, 'utf8');
+  const typesField = /"types"\s*:\s*"[^"]*"/;
+  if (typesField.test(pkg)) {
+    pkg = pkg.replace(typesField, '"types": "./index.d.ts"');
+  } else {
+    pkg = pkg.replace(/^(\s*\{\s*\r?\n)/, '$1  "types": "./index.d.ts",\n');
+  }
+  fs.writeFileSync(pkgPath, pkg);
+}
+
 function main() {
   const target = findTarget();
   if (!target) {
     return;
   }
+
+  patchTypesField(path.dirname(target));
 
   if (!fs.existsSync(SNIPPET_FILE)) {
     process.exit(1);
