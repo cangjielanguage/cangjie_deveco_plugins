@@ -34,7 +34,6 @@ export class CangjieCommonPath {
 
   get abi(): string {
     return this._abi;
-
   }
 
   get buildMode(): string {
