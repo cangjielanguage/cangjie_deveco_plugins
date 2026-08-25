@@ -24,6 +24,20 @@ public class CangjiePackageUtils {
     public static final Pattern PACKAGE_DECLARATION_PATTERN = Pattern.compile(
         "^\\s*package\\s+([a-zA-Z_][a-zA-Z0-9_.]*)\\s*;?\\s*$", Pattern.MULTILINE);
 
+    private static final Pattern CANGJIE_PACKAGE_NAME =
+        Pattern.compile("_*[a-zA-Z][a-zA-Z0-9_]*(\\._*[a-zA-Z][a-zA-Z0-9_]*)*");
+
+
+    /**
+     * 判断是否是有效的仓颉包名（支持点号分隔的限定包名，如 foo.bar）
+     *
+     * @param name 包名
+     * @return 是否有效
+     */
+    public static boolean isValidCangjieName(String name) {
+        return name != null && CANGJIE_PACKAGE_NAME.matcher(name).matches();
+    }
+
     /**
      * extract package name
      *
