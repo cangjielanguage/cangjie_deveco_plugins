@@ -33,13 +33,6 @@ body:
       description: "补充下其他您认为需要提供的信息： | Add any other information you think is necessary to provide."
     validations:
       required: false
-  - type: textarea
-    attributes:
-      label: "cjc版本信息 | cjc version information"
-      description: "请将cjc -v的输出结果以图片或者文字的形式填写在下方： | Please provide the output of 'cjc -v' as text or an image below."
-      placeholder: ""
-    validations:
-      required: true
   - type: checkboxes
     attributes:
       label: "分支版本信息 | Branch version information"
@@ -48,8 +41,6 @@ body:
         - label: dev
           required: false
         - label: main
-          required: false
-        - label: release/1.0
           required: false
     validations:
       required: true
