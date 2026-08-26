@@ -6,7 +6,6 @@
 
   See https://cangjie-lang.cn/pages/LICENSE for license information.
 -->
-
 <?xml version="1.0"?>
 <command>
     <#include "cangjie/command.xml.ftl" />
