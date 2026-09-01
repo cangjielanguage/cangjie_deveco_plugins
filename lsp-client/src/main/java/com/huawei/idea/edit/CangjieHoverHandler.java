@@ -153,7 +153,20 @@ public class CangjieHoverHandler {
     }
 
     private static String renderMarkdown(@NotNull Project project, String markdown) {
-        return MarkdownProcessor.toHtml(project, markdown);
+        // The bundled Markdown renderer treats a single line feed as a soft break and
+        // collapses it to a space. Render each source line separately and add an explicit
+        // HTML break so documentation comments retain their layout in the IntelliJ popup.
+        String[] lines = markdown.split("\\n", -1);
+        StringBuilder html = new StringBuilder();
+        for (int i = 0; i < lines.length; i++) {
+            if (!lines[i].isEmpty()) {
+                html.append(MarkdownProcessor.toHtml(project, lines[i]));
+            }
+            if (i + 1 < lines.length) {
+                html.append("<br>");
+            }
+        }
+        return html.toString();
     }
 
     private static String normalizeLineSeparator(String text) {
