@@ -1040,7 +1040,7 @@ lambdaParameter
     ;
 
 spawnExpression
-    : SPAWN NL* lambdaExpression
+    : SPAWN NL* (LPAREN NL* expression NL* RPAREN NL*)? lambdaExpression
     ;
 
 unsafeExpression
@@ -1048,7 +1048,7 @@ unsafeExpression
     ;
 
 synchronizedExpression
-    : SYNCHRONIZED LPAREN NL* identifier NL* RPAREN NL* block
+    : SYNCHRONIZED LPAREN NL* expression NL* RPAREN NL* block
     ;
 
 parenthesizedExpression
