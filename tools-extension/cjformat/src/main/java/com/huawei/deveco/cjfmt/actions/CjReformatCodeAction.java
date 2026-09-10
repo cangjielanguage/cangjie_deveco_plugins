@@ -12,18 +12,18 @@ import static com.huawei.deveco.cjfmt.utils.FormatConstant.REFORMAT_CODE;
 import static com.huawei.deveco.cjfmt.utils.FormatConstant.REFORMAT_DIR;
 import static com.huawei.deveco.cjfmt.utils.FormatUtils.checkFile;
 import static com.huawei.deveco.cjfmt.utils.FormatUtils.notifyResult;
-import static com.huawei.deveco.constants.CangjieConstants.HUMP_CANGJIE;
+import static com.huawei.ideacj.constants.CangjieConstants.HUMP_CANGJIE;
 
 import com.huawei.cangjie.projectmgmt.utils.FileUtils;
 import com.huawei.deveco.cjfmt.core.ReformatCodeService;
 import com.huawei.deveco.projectmodel.ohos.model.ModuleModel;
 import com.huawei.deveco.res.ohos.utils.ModuleUtils;
-import com.huawei.deveco.utils.trace.TraceUtils;
-import com.huawei.deveco.utils.CangjieCompileArg;
-import com.huawei.deveco.utils.ExecuteResult;
-import com.huawei.deveco.utils.LanguageProperties;
-import com.huawei.deveco.utils.LogPrinter;
-import com.huawei.deveco.utils.NotificationUtil;
+import com.huawei.ideacj.utils.trace.TraceUtils;
+import com.huawei.ideacj.utils.CangjieCompileArg;
+import com.huawei.ideacj.utils.ExecuteResult;
+import com.huawei.ideacj.utils.LanguageProperties;
+import com.huawei.ideacj.utils.LogPrinter;
+import com.huawei.ideacj.utils.NotificationUtil;
 
 import com.intellij.codeInsight.actions.ReformatCodeAction;
 import com.intellij.formatting.FormattingModelBuilder;

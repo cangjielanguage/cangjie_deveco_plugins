@@ -12,19 +12,19 @@ import static com.huawei.deveco.cjfmt.utils.FormatConstant.REFORMAT_CODE;
 import static com.huawei.deveco.cjfmt.utils.FormatConstant.REFORMAT_DIR;
 import static com.huawei.deveco.cjfmt.utils.FormatUtils.getFormatToolPath;
 import static com.huawei.deveco.cjfmt.utils.FormatUtils.notifyResult;
-import static com.huawei.deveco.utils.PathUtils.getExePath;
+import static com.huawei.ideacj.utils.PathUtils.getExePath;
 import static com.intellij.codeInsight.actions.TextRangeType.SELECTED_TEXT;
 import static com.intellij.openapi.util.io.FileUtil.toSystemIndependentName;
 
 import com.huawei.deveco.cjfmt.settings.CangjieCodeStyleSettings;
 import com.huawei.deveco.cjfmt.utils.ErrorInfo;
 import com.huawei.deveco.cjfmt.utils.FormatUtils;
-import com.huawei.deveco.constants.CommonConstants;
+import com.huawei.ideacj.constants.CommonConstants;
 import com.huawei.deveco.sdkmanager.core.util.StringUtil;
-import com.huawei.deveco.utils.ExecuteResult;
-import com.huawei.deveco.utils.LogPrinter;
-import com.huawei.deveco.utils.NotificationUtil;
-import com.huawei.deveco.utils.ShellCommand;
+import com.huawei.ideacj.utils.ExecuteResult;
+import com.huawei.ideacj.utils.LogPrinter;
+import com.huawei.ideacj.utils.NotificationUtil;
+import com.huawei.ideacj.utils.ShellCommand;
 
 import com.intellij.application.options.CodeStyle;
 import com.intellij.codeInsight.actions.LastRunReformatCodeOptionsProvider;

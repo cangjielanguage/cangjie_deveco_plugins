@@ -11,8 +11,8 @@ package com.huawei.deveco.cjfmt.actions;
 import static com.huawei.deveco.cjfmt.utils.FormatUtils.checkFile;
 
 import com.huawei.deveco.cjfmt.core.ReformatCodeService;
-import com.huawei.deveco.utils.CangjieCompileArg;
-import com.huawei.deveco.utils.trace.TraceUtils;
+import com.huawei.ideacj.utils.CangjieCompileArg;
+import com.huawei.ideacj.utils.trace.TraceUtils;
 
 import com.intellij.codeInsight.actions.FileInEditorProcessor;
 import com.intellij.codeInsight.actions.LayoutCodeDialog;
