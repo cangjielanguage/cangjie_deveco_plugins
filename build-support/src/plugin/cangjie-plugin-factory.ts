@@ -34,7 +34,6 @@ import {CURRENT_IDE_VERSION} from '../constants/constants';
 import {isCangjieModule} from '../utils/common-utils';
 import {CangjieTaskNames} from '../task/cangjie-task-names';
 import {CompileNodeGraphMatch} from '../utils/compile-node-graph-match';
-import CommonHookTask = TaskNames.CommonHookTask;
 
 export const ideaConfigPath = getIdeaConfigPath();
 const isCangjiePluginEnabled = isPluginEnabled();
@@ -194,10 +193,10 @@ function initGlobalTasks(module: HvigorCoreNode, plugin: AbstractModulePlugin): 
     hasBuiltDependencyTree = true;
     const commandEntryTasks = node.getCommandEntryTask();
     const isNotNeedSmartBuildInit = commandEntryTasks === undefined ||
-      !(commandEntryTasks.includes(CommonHookTask.ASSEMBLE_HAP.name) ||
-        commandEntryTasks.includes(CommonHookTask.ASSEMBLE_HAR.name) ||
-        commandEntryTasks.includes(CommonHookTask.ASSEMBLE_HSP.name) ||
-        commandEntryTasks.includes(CommonHookTask.ASSEMBLE_APP.name));
+      !(commandEntryTasks.includes(TaskNames.CommonHookTask.ASSEMBLE_HAP.name) ||
+        commandEntryTasks.includes(TaskNames.CommonHookTask.ASSEMBLE_HAR.name) ||
+        commandEntryTasks.includes(TaskNames.CommonHookTask.ASSEMBLE_HSP.name) ||
+        commandEntryTasks.includes(TaskNames.CommonHookTask.ASSEMBLE_APP.name));
     if (isNotNeedSmartBuildInit) {
       return;
     }

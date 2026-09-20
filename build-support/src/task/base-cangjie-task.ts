@@ -192,7 +192,7 @@ export abstract class BaseCangjieTask extends OhosHapTask {
     const cangjieOptionPath = this.cangjieOption?.path;
     const isTargetOhosTest = this.targetName === DefaultTargetConst.OHOS_TEST_TARGET;
     const isBuildTest = InjectUtil.isOhosTest() && ((isTargetOhosTest && hasEtsModule(moduleDir)) ||
-      onlyCangjieModule(moduleDir));
+      onlyCangjieModule(moduleDir)) && hvigorCore.getExtraConfig().get('isCangjie') === 'true';
     if (InjectUtil.isLocalTest()) {
       this.cjSource = fs.existsSync(localTestCangjieDir) ? localTestCangjieDir : '';
       this.cjpmTomlPath = fs.existsSync(localTestTomlPath) ? localTestTomlPath : '';
