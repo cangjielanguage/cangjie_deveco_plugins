@@ -1109,7 +1109,7 @@ keywords
     ;
 
 identifier
-    : keywords | Identifier | WILDCARD
+    : keywords | Identifier | WILDCARD | STAGE
     ;
 
 quoteToken
