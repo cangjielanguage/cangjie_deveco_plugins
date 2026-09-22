@@ -691,34 +691,36 @@ public class CangjieEditorEventManager extends EditorEventManager {
             if (res == null || res.isEmpty()) {
                 return new Pair<>(null, null);
             }
-            List<VirtualFile> openedEdts = new ArrayList<>();
-            List<PsiElement> psiElements = new ArrayList<>();
-            res.forEach(loc -> {
-                Position locStart = loc.getRange().getStart();
-                Position locEnd = loc.getRange().getEnd();
-                String uri = FileUtils.sanitizeURI(loc.getUri());
-                VirtualFile vFile = FileUtils.virtualFileFromURI(uri);
-                if (vFile == null) {
-                    return;
-                }
-                PsiFile psiFile = PsiManager.getInstance(this.project).findFile(vFile);
-                Document document = FileDocumentManager.getInstance().getDocument(vFile);
-                if (document == null || psiFile == null) {
-                    return;
-                }
-                if (locStart.getLine() < 0 || locStart.getLine() >= document.getLineCount()) {
-                    return;
-                }
-                int logicalStart = document.getLineStartOffset(locStart.getLine()) + locStart.getCharacter();
-                int logicalEnd = document.getLineStartOffset(locEnd.getLine()) + locEnd.getCharacter();
-                if (logicalStart < 0 || logicalEnd > document.getTextLength()) {
-                    return;
-                }
-                String name = document.getText(new TextRange(logicalStart, logicalEnd));
-                psiElements.add(new LSPPsiElement(name, this.project, logicalStart, logicalEnd, psiFile));
-                openedEdts.add(vFile);
+            return ReadAction.computeBlocking(() -> {
+                List<VirtualFile> openedEdts = new ArrayList<>();
+                List<PsiElement> psiElements = new ArrayList<>();
+                res.forEach(loc -> {
+                    Position locStart = loc.getRange().getStart();
+                    Position locEnd = loc.getRange().getEnd();
+                    String uri = FileUtils.sanitizeURI(loc.getUri());
+                    VirtualFile vFile = FileUtils.virtualFileFromURI(uri);
+                    if (vFile == null) {
+                        return;
+                    }
+                    PsiFile psiFile = PsiManager.getInstance(this.project).findFile(vFile);
+                    Document document = FileDocumentManager.getInstance().getDocument(vFile);
+                    if (document == null || psiFile == null) {
+                        return;
+                    }
+                    if (locStart.getLine() < 0 || locStart.getLine() >= document.getLineCount()) {
+                        return;
+                    }
+                    int logicalStart = document.getLineStartOffset(locStart.getLine()) + locStart.getCharacter();
+                    int logicalEnd = document.getLineStartOffset(locEnd.getLine()) + locEnd.getCharacter();
+                    if (logicalStart < 0 || logicalEnd > document.getTextLength()) {
+                        return;
+                    }
+                    String name = document.getText(new TextRange(logicalStart, logicalEnd));
+                    psiElements.add(new LSPPsiElement(name, this.project, logicalStart, logicalEnd, psiFile));
+                    openedEdts.add(vFile);
+                });
+                return new Pair<>(psiElements, openedEdts);
             });
-            return new Pair<>(psiElements, openedEdts);
         } catch (TimeoutException timeoutException) {
             timeoutCrashCheck(requestManager);
             LOG.warn("Find references link timeout");
