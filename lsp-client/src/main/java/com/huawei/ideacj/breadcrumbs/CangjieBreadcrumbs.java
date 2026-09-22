@@ -86,9 +86,13 @@ public class CangjieBreadcrumbs implements BreadcrumbsProvider {
             if (nextSibling != null && nextSibling.getText().equals(".")) {
                 isSuffix = false;
             }
+
             PsiElement firstChild = element.getFirstChild();
             if (firstChild != null) {
                 PsiElement next = CjPsiUtils.getValidNextToken(firstChild);
+                if (next instanceof CjCallSuffix && hasOuterCallWrapper(element)) {
+                    return false;
+                }
                 // e.g: a.b() (identify a[next call suffix] and b[next dot])
                 // e.g: aa().bb() (identify aa[next call suffix])
                 return next instanceof CjCallSuffix || (isSuffix && next != null && next.getText().equals("."));
@@ -105,6 +109,19 @@ public class CangjieBreadcrumbs implements BreadcrumbsProvider {
             return name != null && !name.isEmpty();
         }
 
+        return false;
+    }
+
+    private boolean hasOuterCallWrapper(PsiElement element) {
+        PsiElement parent = element.getParent();
+        while (parent instanceof CjPostfixExpression) {
+            PsiElement firstChild = parent.getFirstChild();
+            if (firstChild != null
+                    && CjPsiUtils.getValidNextToken(firstChild) instanceof CjCallSuffix) {
+                return true;
+            }
+            parent = parent.getParent();
+        }
         return false;
     }
 
