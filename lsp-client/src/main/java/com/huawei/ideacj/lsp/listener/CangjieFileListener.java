@@ -67,6 +67,8 @@ public class CangjieFileListener extends VFSListener {
 
     private static final Set<String> FILE_EXTENSIONS = Set.of(LanguageManager.CANGJIE_EXTENSION);
 
+    private static final Set<String> SKIP_DIRECTORIES = Set.of("oh_modules", "node_modules", ".idea", "build");
+
     /**
      * Fired when a virtual file is renamed from within IDEA, or its writable status is changed.
      * For files renamed externally, {@link #fileCreated} and {@link #fileDeleted} events will be fired.
@@ -163,10 +165,16 @@ public class CangjieFileListener extends VFSListener {
 
     private void beforeDirectoryDeletion(@NotNull VirtualFileEvent event) {
         VirtualFile file = event.getFile();
+        if (SKIP_DIRECTORIES.contains(file.getName())) {
+            return;
+        }
         Project project = getProject(event, file);
         VfsUtilCore.visitChildrenRecursively(file, new VirtualFileVisitor<Void>() {
             @Override
             public boolean visitFile(@NotNull VirtualFile f) {
+                if (f.isDirectory() && SKIP_DIRECTORIES.contains(f.getName())) {
+                    return false;
+                }
                 if (!f.isDirectory() && isCangjieFile(f)) {
                     if (Objects.nonNull(project)) {
                         project.getMessageBus()
