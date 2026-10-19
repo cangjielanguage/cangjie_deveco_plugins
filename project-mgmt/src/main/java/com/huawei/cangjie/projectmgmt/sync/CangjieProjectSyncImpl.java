@@ -322,10 +322,12 @@ public class CangjieProjectSyncImpl implements PreSync {
                 continue;
             }
             List<JsonSchemaFileProvider> providers = implementation.getProviders(projectModel.getProject());
-            if (providers.size() != 3) {
+            if (providers.isEmpty()) {
                 continue;
             }
             if (isChina && implementation instanceof BuildProfileSchemaProviderFactory) {
+                CjBuildProfileSchemaProviderFactory.keepNativeFactory(
+                    (BuildProfileSchemaProviderFactory) implementation);
                 point.unregisterExtension(BuildProfileSchemaProviderFactory.class);
                 break;
             }
