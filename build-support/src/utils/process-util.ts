@@ -122,24 +122,45 @@ export class ProcessUtil {
    * @param options - Input parameters
    */
   processOptionsFactory(options: SpawnSyncOptions | undefined | SpawnOptionsWithoutStdio): SpawnSyncOptions {
-    const pathEnv: string | undefined = process.env.PATH;
     if (options) {
       options.windowsHide = true;
     }
     if (options?.env) {
-      options.env = {
-        ...process.env,
-        ...options.env,
-      };
-    }
-    if (options?.env?.path && pathEnv) {
-      options.env.path = pathEnv + (isWindows() ? ';' : ':') + options.env.path;
+      if (isWindows()) {
+        options.env = {
+          ...this.normalizeWindowsPathEnv(process.env),
+          ...this.normalizeWindowsPathEnv(options.env),
+        };
+      } else {
+        options.env = {
+          ...process.env,
+          ...options.env,
+        };
+        if (options.env.path && process.env.PATH) {
+          options.env.path = `${process.env.PATH}:${options.env.path}`;
+        }
+      }
     }
 
     return {
       ...this._defaultOptions,
       ...options,
     };
+  }
+
+  private normalizeWindowsPathEnv(env: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
+    const normalizedEnv: NodeJS.ProcessEnv = {};
+    for (const [key, value] of Object.entries(env)) {
+      if (key.toLowerCase() === 'path') {
+        // Keep the last defined value, including an explicitly empty PATH.
+        if (value !== undefined || !Object.prototype.hasOwnProperty.call(normalizedEnv, 'PATH')) {
+          normalizedEnv.PATH = value;
+        }
+      } else {
+        normalizedEnv[key] = value;
+      }
+    }
+    return normalizedEnv;
   }
 
   private handleException(e: any, combine: LogCombineType): void {
